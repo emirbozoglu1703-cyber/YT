@@ -1,0 +1,60 @@
+name: Günlük Short
+
+on:
+  schedule:
+    - cron: "17 15 * * *"   # her gün 18:17 (Türkiye, UTC+3)
+  workflow_dispatch:
+    inputs:
+      privacy:
+        description: "public / unlisted / private"
+        default: "public"
+
+permissions:
+  contents: write
+
+concurrency: daily-short
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Bağımlılıklar
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-dejavu-core
+          pip install -r requirements.txt
+      - name: Kuyruk azaldıysa yeni hikâye yaz
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python pipeline/write_story.py
+      - name: Video üret ve yükle
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_VOICE_NARRATOR: ${{ secrets.ELEVENLABS_VOICE_NARRATOR }}
+          ELEVENLABS_VOICE_OLD: ${{ secrets.ELEVENLABS_VOICE_OLD }}
+          ELEVENLABS_VOICE_YOUNG: ${{ secrets.ELEVENLABS_VOICE_YOUNG }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          YT_PRIVACY: ${{ github.event.inputs.privacy || 'public' }}
+        run: python pipeline/make_video.py --next --upload
+      - name: Videoyu sakla (30 gün)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: short
+          path: |
+            output/*/*.mp4
+            output/*/thumbnail.jpg
+            output/*/qa/*.jpg
+          retention-days: 30
+      - name: Yayınlananı kaydet
+        run: |
+          git config user.name "kissa-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add stories
+          git diff --cached --quiet || (git commit -m "Yayınlandı: $(ls -t stories/published | head -1)" && git push)
