@@ -172,6 +172,8 @@ def cmd_check_script(a):
             issues.append("son replik seyirciye bir seçim sorusu olmalı")
         if "yorumlara yaz" in " ".join(l["text"].lower() for l in lines):
             issues.append("'Yorumlara yaz' kalıbı kullanma; soru kendi başına yeterli")
+    if not 8 <= len(s.get("banner", "")) <= 34:
+        issues.append(f"banner {len(s.get('banner', ''))} karakter (8-34 olmalı): videonun üstünde duran merak başlığı")
     for k in ("working_title", "moral", "music"):
         if not s.get(k):
             issues.append(f"{k} boş")
@@ -195,7 +197,7 @@ def cmd_voice(a):
     print(f"{'#':>2} {'ses':<9} {'süre':>5} {'k/sn':>5} {'maxdB':>6} {'benzerlik':>9}  duyulan")
     for i, r in enumerate(res, 1):
         print(f"{i:>2} {r['voice']:<9} {r['duration']:>5.2f} {r['words_per_sec']:>5} {str(r['metrics']['max_db']):>6} {str(r['similarity']):>9}  {(r['transcript'] or '-')[:70]}")
-    print(f"toplam: {sum(r['duration'] + production.PAD for r in res):.1f} sn")
+    print(f"toplam (tempo {production.tempo()} ile): {sum(r['duration'] / production.tempo() + production.PAD for r in res):.1f} sn")
     report(issues)
 
 

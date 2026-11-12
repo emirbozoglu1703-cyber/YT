@@ -1,0 +1,350 @@
+{
+ "id": "cuzdan_testi",
+ "title": "Kapıdaki Cüzdanı Kim Getirdi?",
+ "banner": "5.000 TL'lik cüzdan testi",
+ "music": "mystery",
+ "moral": "İnsanı göründüğü değil, yaptığı anlatır.",
+ "cast": [
+  {
+   "id": "patron",
+   "name": "Kemal Bey",
+   "type": "human",
+   "gender": "male",
+   "age": "adult",
+   "outfit": "suit",
+   "color": "navy",
+   "glasses": true,
+   "mustache": true,
+   "hair": "short",
+   "hair_color": "gray",
+   "voice": "man"
+  },
+  {
+   "id": "elif",
+   "name": "Elif",
+   "type": "human",
+   "gender": "female",
+   "outfit": "dress",
+   "color": "red",
+   "hair": "long",
+   "hair_color": "brown",
+   "voice": "woman"
+  },
+  {
+   "id": "hasan",
+   "name": "Hasan Amca",
+   "type": "human",
+   "gender": "male",
+   "age": "old",
+   "outfit": "vest",
+   "color": "brown",
+   "color2": "white",
+   "hat": "cap",
+   "hat_color": "gray",
+   "beard": true,
+   "voice": "old"
+  },
+  {
+   "id": "can",
+   "name": "Can",
+   "type": "human",
+   "gender": "male",
+   "outfit": "vest",
+   "color": "green",
+   "color2": "white",
+   "hair": "short",
+   "hair_color": "black",
+   "holds": "wallet",
+   "voice": "young"
+  }
+ ],
+ "scenes": [
+  {
+   "speaker": "patron",
+   "text": "Üç aday, tek iş. Hiçbiri bu testin farkında değil.",
+   "tts_text": "[curious] Üç aday, tek iş. Hiçbiri... bu testin farkında değil.",
+   "voice_settings": {
+    "stability": 0.5
+   },
+   "backdrop": "office",
+   "light": "day",
+   "camera": "close",
+   "on_stage": [
+    {
+     "id": "patron",
+     "x": 0.5,
+     "face": 1,
+     "action": "talk"
+    }
+   ]
+  },
+  {
+   "speaker": "patron",
+   "text": "Kapının önüne içinde 5.000 lira olan bir cüzdan bıraktım.",
+   "tts_text": "Kapının önüne, içinde beş bin lira olan bir cüzdan bıraktım.",
+   "backdrop": "street",
+   "light": "day",
+   "camera": "medium",
+   "on_stage": [
+    {
+     "id": "patron",
+     "x": 0.35,
+     "face": 1,
+     "action": "point"
+    }
+   ],
+   "props": [
+    {
+     "kind": "wallet",
+     "x": 0.62
+    },
+    {
+     "kind": "door",
+     "x": 0.78
+    }
+   ]
+  },
+  {
+   "speaker": "elif",
+   "text": "Yerde cüzdan mı var? Neyse, mülakata geç kalmayayım!",
+   "tts_text": "[surprised] Yerde cüzdan mı var? [sighs] Neyse, mülakata geç kalmayayım!",
+   "backdrop": "street",
+   "light": "day",
+   "camera": "wide",
+   "on_stage": [
+    {
+     "id": "elif",
+     "x": 0.7,
+     "face": 1,
+     "action": "walk",
+     "from_x": 0.25
+    }
+   ],
+   "props": [
+    {
+     "kind": "wallet",
+     "x": 0.45
+    },
+    {
+     "kind": "door",
+     "x": 0.78
+    }
+   ]
+  },
+  {
+   "speaker": "hasan",
+   "text": "Bu cüzdan kimin? Hey, düşüren var mı?",
+   "tts_text": "[curious] Bu cüzdan kimin? [shouting] Hey, düşüren var mı?",
+   "backdrop": "street",
+   "light": "day",
+   "camera": "medium",
+   "on_stage": [
+    {
+     "id": "hasan",
+     "x": 0.4,
+     "face": 1,
+     "action": "think"
+    }
+   ],
+   "props": [
+    {
+     "kind": "wallet",
+     "x": 0.6
+    },
+    {
+     "kind": "door",
+     "x": 0.78
+    }
+   ]
+  },
+  {
+   "speaker": "hasan",
+   "text": "Kimse yok. Yerinde bırakayım, sahibi döner belki.",
+   "backdrop": "street",
+   "light": "day",
+   "camera": "wide",
+   "on_stage": [
+    {
+     "id": "hasan",
+     "x": 0.7,
+     "face": 1,
+     "action": "walk",
+     "from_x": 0.4
+    }
+   ],
+   "props": [
+    {
+     "kind": "wallet",
+     "x": 0.45
+    },
+    {
+     "kind": "door",
+     "x": 0.78
+    }
+   ]
+  },
+  {
+   "speaker": "can",
+   "text": "Beş bin lira! Etrafta da kimse yok...",
+   "tts_text": "[excited] Beş bin lira! [whispers] Etrafta da kimse yok...",
+   "voice_settings": {
+    "stability": 0.0
+   },
+   "backdrop": "street",
+   "light": "day",
+   "camera": "close",
+   "on_stage": [
+    {
+     "id": "can",
+     "x": 0.45,
+     "face": 1,
+     "action": "jump"
+    }
+   ],
+   "props": [
+    {
+     "kind": "door",
+     "x": 0.78
+    }
+   ]
+  },
+  {
+   "speaker": "narrator",
+   "text": "Kemal Bey her şeyi pencereden izliyormuş.",
+   "backdrop": "office",
+   "light": "day",
+   "camera": "medium",
+   "on_stage": [
+    {
+     "id": "patron",
+     "x": 0.4,
+     "face": 1,
+     "action": "sad"
+    }
+   ]
+  },
+  {
+   "speaker": "patron",
+   "text": "Kapıda bir cüzdan vardı. İçinizden gören oldu mu?",
+   "backdrop": "office",
+   "light": "day",
+   "camera": "wide",
+   "on_stage": [
+    {
+     "id": "patron",
+     "x": 0.22,
+     "face": 1,
+     "action": "talk"
+    },
+    {
+     "id": "elif",
+     "x": 0.5,
+     "face": -1,
+     "action": "idle"
+    },
+    {
+     "id": "hasan",
+     "x": 0.78,
+     "face": -1,
+     "action": "idle"
+    }
+   ]
+  },
+  {
+   "speaker": "elif",
+   "text": "Gördüm ama durmadım. Dakiklik önemli, değil mi?",
+   "backdrop": "office",
+   "light": "day",
+   "camera": "medium",
+   "on_stage": [
+    {
+     "id": "patron",
+     "x": 0.25,
+     "face": 1,
+     "action": "idle"
+    },
+    {
+     "id": "elif",
+     "x": 0.6,
+     "face": -1,
+     "action": "talk"
+    }
+   ]
+  },
+  {
+   "speaker": "hasan",
+   "text": "Ben sahibini aradım, bulamayınca yerinde bıraktım.",
+   "backdrop": "office",
+   "light": "day",
+   "camera": "medium",
+   "on_stage": [
+    {
+     "id": "patron",
+     "x": 0.25,
+     "face": 1,
+     "action": "idle"
+    },
+    {
+     "id": "hasan",
+     "x": 0.62,
+     "face": -1,
+     "action": "talk"
+    }
+   ]
+  },
+  {
+   "speaker": "can",
+   "text": "Ben aldım. İçinde sizin kartvizitiniz vardı. Buyurun.",
+   "tts_text": "[warmly] Ben aldım. İçinde sizin kartvizitiniz vardı. Buyurun.",
+   "backdrop": "office",
+   "light": "day",
+   "camera": "medium",
+   "on_stage": [
+    {
+     "id": "patron",
+     "x": 0.28,
+     "face": 1,
+     "action": "jump"
+    },
+    {
+     "id": "can",
+     "x": 0.66,
+     "face": -1,
+     "action": "give"
+    }
+   ]
+  },
+  {
+   "speaker": "patron",
+   "text": "Seni hırsız sandım. Meğer cüzdanı açan tek kişi senmişsin.",
+   "tts_text": "[surprised] Seni hırsız sandım... [laughs] Meğer cüzdanı açan tek kişi senmişsin.",
+   "backdrop": "office",
+   "light": "day",
+   "camera": "close",
+   "on_stage": [
+    {
+     "id": "patron",
+     "x": 0.5,
+     "face": 1,
+     "action": "laugh"
+    }
+   ]
+  },
+  {
+   "speaker": "can",
+   "text": "Sen olsan kimi işe alırdın? Elif'i mi, Hasan Amca'yı mı, beni mi?",
+   "tts_text": "[curious] Sen olsan kimi işe alırdın? Elif'i mi, Hasan Amca'yı mı, beni mi?",
+   "backdrop": "office",
+   "light": "day",
+   "camera": "medium",
+   "on_stage": [
+    {
+     "id": "can",
+     "x": 0.5,
+     "face": 1,
+     "action": "point"
+    }
+   ]
+  }
+ ]
+}

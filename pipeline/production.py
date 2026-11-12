@@ -48,7 +48,7 @@ def voice_issues(script, voice_res, voice_plan, engine):
     hard = []
     if len(voice_plan) != len(script["lines"]):
         return ["ses planındaki replik sayısı senaryoyla eşleşmiyor"]
-    total = sum(r["duration"] + PAD for r in voice_res)
+    total = sum(r["duration"] / tempo() + PAD for r in voice_res)
     for i, r in enumerate(voice_res, 1):
         if engine == "silent":
             break
@@ -72,13 +72,19 @@ def merged_story(script, staging, voice_plan=None):
         if voice_plan:
             sc["tts_text"] = voice_plan[i].get("tts_text")
         scenes.append(sc)
-    return {"id": script.get("id", "oyun"), "title": script.get("working_title", ""), "music": script.get("music", "playful"),
+    return {"id": script.get("id", "oyun"), "title": script.get("working_title", ""), "banner": script.get("banner", ""), "music": script.get("music", "playful"),
             "moral": script.get("moral", ""), "cast": script["cast"], "scenes": scenes}
 
 
+def tempo() -> float:
+    """Sesi tonu bozmadan hızlandırma katsayısı (config/voices.json -> tempo)."""
+    return float(tts.voice_config().get("tempo", 1.0))
+
+
 def build_theater(story, voice_res):
-    durs = [r["duration"] + PAD for r in voice_res]
-    starts = [tts.map_word_starts(sc["text"], r.get("tts_starts"), r["duration"]) for sc, r in zip(story["scenes"], voice_res)]
+    k = tempo()
+    durs = [r["duration"] / k + PAD for r in voice_res]
+    starts = [[x / k for x in tts.map_word_starts(sc["text"], r.get("tts_starts"), r["duration"])] for sc, r in zip(story["scenes"], voice_res)]
     return theater.build(story, durs, starts)
 
 
@@ -88,7 +94,8 @@ def mix(th: theater.Theater, voice_res, music_mood, work, seed=0):
     inputs, filt = [], []
     for i, (vr, sc) in enumerate(zip(voice_res, scenes)):
         inputs += ["-i", vr["path"]]
-        filt.append(f"[{i}:a]aresample=44100,aformat=channel_layouts=mono,apad=pad_dur={max(0.0, sc.duration - vr['duration']):.3f},atrim=0:{sc.duration:.3f}[a{i}]")
+        k = tempo()
+        filt.append(f"[{i}:a]aresample=44100,aformat=channel_layouts=mono,atempo={k:.3f},apad=pad_dur={max(0.0, sc.duration - vr['duration'] / k):.3f},atrim=0:{sc.duration:.3f}[a{i}]")
     n = len(voice_res)
     outro = scenes[-1].duration
     filt.append(f"anullsrc=r=44100:cl=mono,atrim=0:{outro:.3f}[sil]")

@@ -61,6 +61,14 @@ def duration(path: str) -> float:
     return float(json.loads(out)["format"]["duration"])
 
 
+TAG_RE = re.compile(r"\[[^\]]*\]")
+
+
+def strip_tags(text: str) -> str:
+    """v3 duygu işaretlerini ([whispers] vb.) metinden çıkarır."""
+    return re.sub(r"\s+", " ", TAG_RE.sub("", text)).strip()
+
+
 def _words_from_chars(chars, starts):
     words, cur, cur_start = [], "", None
     for ch, st in zip(chars, starts):
@@ -74,7 +82,16 @@ def _words_from_chars(chars, starts):
             cur += ch
     if cur:
         words.append((cur, cur_start))
-    return [s for _, s in words]
+    # [whispers] gibi duygu işaretleri okunmaz; kelime zamanlarından çıkar
+    out, in_tag = [], False
+    for w, st in words:
+        if w.startswith("["):
+            in_tag = True
+        if not in_tag:
+            out.append(st)
+        if w.endswith("]"):
+            in_tag = False
+    return out
 
 
 def tts_elevenlabs(text, speaker, out, settings=None):
@@ -185,6 +202,7 @@ def norm(s: str) -> str:
 
 
 def similarity(a: str, b: str) -> float:
+    a = strip_tags(a)
     return round(difflib.SequenceMatcher(None, norm(a), norm(b)).ratio(), 3)
 
 

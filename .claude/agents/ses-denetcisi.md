@@ -9,6 +9,7 @@ Her replik için kontrol et:
 - Hız 1.6-4.2 kelime/sn. Patlama: max_db > -0.3. Replik içinde 0.8 sn'den uzun duraklama.
 - Benzerlik (transcript vs tts_text) < 0.85 ise yanlış okuma/telaffuz. "duyulan" ile metni karşılaştır, hangi kelimenin yanlış okunduğunu bul.
 - tts_text ekrandaki metinle aynı kelimeleri içeriyor mu? Sayılar yazıyla mı?
+- Duygu işaretleri ([surprised] vb.) İngilizce ve köşeli parantez içinde mi, replikteki duyguya uyuyor mu? Fazla mı?
 - Ses-karakter uyumu: yaşlı karaktere genç ses, kediye kalın erkek sesi gibi uyumsuzluk var mı?
 - Toplam süre 25-58 sn.
 Kararını `reviews/voice_r<TUR>.json` dosyasına yaz:

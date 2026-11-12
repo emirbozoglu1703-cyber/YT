@@ -28,7 +28,10 @@ def main():
     os.makedirs(work, exist_ok=True)
     script = {"cast": story["cast"], "lines": [{"speaker": s["speaker"], "text": s["text"]} for s in story["scenes"]]}
     vplan = [{"tts_text": s.get("tts_text") or s["text"], "settings": s.get("voice_settings")} for s in story["scenes"]]
-    res = production.synth_lines(script, vplan, work, engine)
+    rep_path = os.path.join(work, "voice_report.json")
+    prev = json.load(open(rep_path)) if os.path.exists(rep_path) else None
+    res = production.synth_lines(script, vplan, work, engine, prev=prev)  # sadece değişen replikler yeniden üretilir
+    json.dump(res, open(rep_path, "w"), ensure_ascii=False)
     for issue in production.voice_issues(script, res, vplan, engine):
         print("ses uyarısı:", issue)
     th, warns = production.build_theater(story, res)

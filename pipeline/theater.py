@@ -40,8 +40,8 @@ BACKDROPS = {"street", "shop", "home", "forest", "village", "sea", "market", "of
 LIGHTS = {"day", "evening", "night"}
 CAMERAS = {"wide", "medium", "close"}
 ACTIONS = {"idle", "talk", "point", "think", "cheer", "sad", "shake", "laugh", "bow", "jump", "give", "enter", "exit", "walk"}
-PROP_KINDS = {"table", "chair", "door", "chest", "sack", "crate", "coins", "plant", "bench", "sign", "candle", "lantern", "tree", "counter", "well", "bed"}
-HOLDS = {"coin", "letter", "gift", "phone", "lantern", "key", "bag", "flower", "book", "cane", "bread", "cup", None}
+PROP_KINDS = {"wallet", "table", "chair", "door", "chest", "sack", "crate", "coins", "plant", "bench", "sign", "candle", "lantern", "tree", "counter", "well", "bed"}
+HOLDS = {"wallet", "coin", "letter", "gift", "phone", "lantern", "key", "bag", "flower", "book", "cane", "bread", "cup", None}
 ANIMALS = {"cat", "dog", "fox", "owl", "crow", "rabbit"}
 
 
@@ -138,7 +138,11 @@ def _arm(color, skin, length=150, kind="human", hold=None):
     d.rounded_rectangle([cx - w // 2, cy - 14, cx + w // 2, cy + length - 18], radius=w // 2, fill=color)
     hx, hy = cx, cy + length - 10
     d.ellipse([hx - 19, hy - 19, hx + 19, hy + 19], fill=skin)
-    if hold == "coin":
+    if hold == "wallet":
+        d.rounded_rectangle([hx - 6, hy - 22, hx + 56, hy + 22], radius=8, fill=(120, 74, 40), outline=(70, 40, 20), width=4)
+        d.rounded_rectangle([hx - 6, hy - 22, hx + 56, hy - 2], radius=8, fill=(146, 92, 52))
+        d.rectangle([hx + 10, hy - 30, hx + 40, hy - 20], fill=(120, 190, 120))
+    elif hold == "coin":
         d.ellipse([hx - 4, hy - 4, hx + 40, hy + 40], fill=(232, 186, 64), outline=(170, 120, 30), width=4)
     elif hold == "letter":
         d.rectangle([hx - 6, hy - 10, hx + 58, hy + 34], fill=(250, 246, 232))
@@ -590,7 +594,12 @@ def build_prop(p: dict) -> tuple[Image.Image, int]:
     d = ImageDraw.Draw(im)
     b = 560
     wood, dark = (164, 114, 70), (110, 74, 46)
-    if kind == "table":
+    if kind == "wallet":  # yerde duran cüzdan, parlıyor (dikkat çeksin)
+        d.ellipse([170, b - 70, 350, b - 10], fill=(255, 230, 140, 120))
+        d.rounded_rectangle([200, b - 70, 320, b - 14], radius=10, fill=(120, 74, 40), outline=(70, 40, 20), width=5)
+        d.rounded_rectangle([200, b - 70, 320, b - 44], radius=10, fill=(146, 92, 52))
+        d.rectangle([224, b - 82, 290, b - 64], fill=(120, 190, 120))
+    elif kind == "table":
         d.rectangle([60, b - 230, 460, b - 196], fill=wood)
         for x in (90, 410):
             d.rectangle([x - 12, b - 200, x + 12, b], fill=dark)
@@ -718,9 +727,6 @@ def stage_frame() -> Image.Image:
         d.arc([x0 - 4, 230, x0 + W / 12 + 4, 330], 0, 180, fill=(214, 170, 70), width=8)
     d.rectangle([0, 50, W, 76], fill=(214, 170, 70))
     d.rectangle([0, 0, W, 52], fill=(70, 40, 30))
-    # kanal tabelası
-    d.rounded_rectangle([W / 2 - 250, 96, W / 2 + 250, 186], radius=20, fill=(232, 196, 104), outline=(150, 100, 40), width=6)
-    d.text((W / 2, 143), "KISSA DEFTERİ", font=font(FONT_SERIF, 46), fill=(80, 40, 20), anchor="mm")
     # sahne önü
     d.rectangle([0, LIP_TOP, W, LIP_BOT], fill=(96, 58, 36))
     d.rectangle([0, LIP_TOP, W, LIP_TOP + 10], fill=(150, 98, 60))
@@ -928,7 +934,7 @@ def lint_scene(sd: dict, cast_ids: set) -> tuple[dict, list[str]]:
             continue
         x = min(0.78, max(0.22, float(p.get("x", 0.5))))
         for q in keep:
-            if abs(q["x"] - x) < 0.12 and p["kind"] not in ("coins", "sack", "crate", "chest", "candle"):
+            if abs(q["x"] - x) < 0.12 and p["kind"] not in ("coins", "sack", "crate", "chest", "candle", "wallet"):
                 nx = x + (0.2 if x >= q["x"] else -0.2)
                 if 0.12 <= nx <= 0.88:
                     warn.append(f"'{p['kind']}' kuklanın önünü kapatıyor; kaydırıldı")
@@ -942,7 +948,9 @@ def lint_scene(sd: dict, cast_ids: set) -> tuple[dict, list[str]]:
 
 
 class Theater:
-    def __init__(self, cast: list[dict], scenes: list[TScene]):
+    def __init__(self, cast: list[dict], scenes: list[TScene], banner: str = ""):
+        self.banner = banner
+        self._banner = None
         self.puppets = {c["id"]: Puppet(c) for c in cast}
         self.scenes = scenes
         self._bd: dict = {}
@@ -1142,9 +1150,32 @@ class Theater:
         out.paste((14, 8, 10), (0, 1330), band)
         return out
 
+    def draw_banner(self, img):
+        """Videonun merak başlığı: üstte, büyük, her planda okunur."""
+        if not self.banner:
+            return
+        if self._banner is None:
+            band = Image.new("RGBA", (W, 300), (0, 0, 0, 0))
+            d = ImageDraw.Draw(band)
+            size = 76
+            fnt = font(FONT_BOLD, size)
+            lines = wrap(d, self.banner, fnt, W - 120)
+            while len(lines) > 2 and size > 52:
+                size -= 4
+                fnt = font(FONT_BOLD, size)
+                lines = wrap(d, self.banner, fnt, W - 120)
+            h = 60 + len(lines) * int(size * 1.18)
+            d.rounded_rectangle([34, 40, W - 34, 40 + h], radius=26, fill=(250, 244, 228, 248), outline=(150, 30, 40, 255), width=8)
+            for i, l in enumerate(lines):
+                d.text((W / 2, 40 + 30 + i * size * 1.18 + size / 2), l, font=fnt, fill=(40, 22, 20), anchor="mm")
+            self._banner = band
+        img.paste(self._banner, (0, 0), self._banner)
+
     def frame(self, si, t, gt, captions=True):
         sc = self.scenes[si]
         img = self.camera(self.stage_image(si, t, gt), si, t)
+        if not sc.is_outro:
+            self.draw_banner(img)
         if captions and not sc.is_outro:
             if sc.speaker == "narrator":
                 name, c = "Anlatıcı", (150, 110, 40)
@@ -1209,4 +1240,4 @@ def build(story: dict, durations: list[float], word_starts: list, outro=1.8):
     last = scenes[-1]
     scenes.append(TScene(text="", duration=outro, speaker="narrator", backdrop=last.backdrop, light=last.light, camera="wide",
                          on_stage=[{**p, "action": "bow"} for p in last.on_stage], props=last.props, is_outro=True))
-    return Theater(story["cast"], scenes), warns
+    return Theater(story["cast"], scenes, story.get("banner", "")), warns

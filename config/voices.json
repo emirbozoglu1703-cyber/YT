@@ -1,6 +1,6 @@
 {
   "engine": "elevenlabs",
-  "model": "eleven_multilingual_v2",
+  "model": "eleven_v3",
   "_not": "ElevenLabs Voice Library'den Türkçe konuşabilen sesler seçip Voice ID'lerini buraya yazın. Kadrodaki her karakterin 'voice' alanı bu anahtarlardan biri olmalı.",
   "voices": {
     "narrator": "JBFqnCBsd6RMkjVDRZzb",
@@ -18,5 +18,6 @@
     "woman": "Lily (hazır ses)",
     "child": "Jessica (hazır ses)",
     "_not": "Ücretsiz planda sadece hazır sesler API'den kullanılabilir. Creator ve üstü planda kütüphanedeki ana dili Türkçe sesler (ör. Sultan gyxPK6bLXQAkBSCeAKvk, Seyfullah Kartal mF7tIc9VLrznhGooGjaT, Gökçe Deniz oPC5I9GKjMReiaM29gjY) buraya yazılabilir."
-  }
+  },
+  "tempo": 1.1
 }
