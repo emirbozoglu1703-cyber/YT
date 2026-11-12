@@ -1,0 +1,41 @@
+{
+  "id": "firinci_nuri",
+  "title": "Kimseye Bedava Ekmek Vermezdi",
+  "music": "playful",
+  "moral": "Gerçek iyilik alkış beklemez.",
+  "cast": [
+    {"id": "tarcin", "name": "Tarçın", "type": "cat", "color": "orange", "voice": "child"},
+    {"id": "nuri", "name": "Nuri Usta", "type": "human", "gender": "male", "age": "old", "outfit": "apron", "color": "ochre", "color2": "white", "hat": "chef", "mustache": true, "hair": "bald", "voice": "old"},
+    {"id": "selin", "name": "Selin", "type": "human", "gender": "female", "outfit": "dress", "color": "purple", "hair": "long", "hair_color": "black", "voice": "woman"}
+  ],
+  "scenes": [
+    {"speaker": "tarcin", "text": "Bu adam kimseye bedava ekmek vermez. Bana bile!", "backdrop": "shop", "light": "day", "camera": "close",
+     "on_stage": [{"id": "tarcin", "x": 0.5, "face": 1, "action": "talk"}], "props": [{"kind": "counter", "x": 0.78, "scale": 0.8}]},
+    {"speaker": "nuri", "text": "Ekmek bir lira! Pazarlık yok, veresiye yok!", "backdrop": "shop", "light": "day", "camera": "wide",
+     "on_stage": [{"id": "nuri", "x": 0.5, "face": 1, "action": "point"}, {"id": "tarcin", "x": 0.22, "face": 1, "action": "idle"}], "props": [{"kind": "sign", "x": 0.78, "text": "FIRIN"}]},
+    {"speaker": "selin", "text": "Usta, param biraz eksik. Yarın getirsem olur mu?", "backdrop": "shop", "light": "day", "camera": "medium",
+     "on_stage": [{"id": "nuri", "x": 0.3, "face": 1, "action": "idle"}, {"id": "selin", "x": 0.68, "face": -1, "action": "enter", "from": "right", "holds": "bag"}]},
+    {"speaker": "nuri", "text": "Yarın mı? Bu dükkânda yarın diye bir şey yok!", "backdrop": "shop", "light": "day", "camera": "close",
+     "on_stage": [{"id": "nuri", "x": 0.3, "face": 1, "action": "shake"}, {"id": "selin", "x": 0.68, "face": -1, "action": "sad"}]},
+    {"speaker": "narrator", "text": "Selin boynunu büküp sessizce çıkmış.", "backdrop": "shop", "light": "day", "camera": "wide",
+     "on_stage": [{"id": "nuri", "x": 0.3, "face": 1, "action": "idle"}, {"id": "selin", "x": 0.66, "face": 1, "action": "exit", "to": "right"}]},
+    {"speaker": "tarcin", "text": "Ama o akşam çok garip bir şey gördüm.", "backdrop": "street", "light": "evening", "camera": "medium",
+     "on_stage": [{"id": "tarcin", "x": 0.4, "face": 1, "action": "think"}], "props": [{"kind": "lantern", "x": 0.75}]},
+    {"speaker": "nuri", "text": "Kimse görmesin. Şuraya bırakıvereyim.", "backdrop": "street", "light": "evening", "camera": "wide",
+     "on_stage": [{"id": "nuri", "x": 0.55, "face": 1, "action": "walk", "from_x": 0.25}, {"id": "tarcin", "x": 0.2, "face": 1, "action": "idle"}], "props": [{"kind": "door", "x": 0.8}]},
+    {"speaker": "tarcin", "text": "Selin'in kapısına! Hem de her akşam!", "backdrop": "street", "light": "evening", "camera": "close",
+     "on_stage": [{"id": "tarcin", "x": 0.42, "face": 1, "action": "jump"}], "props": [{"kind": "door", "x": 0.78}, {"kind": "sack", "x": 0.62, "scale": 0.6}]},
+    {"speaker": "selin", "text": "Bu taze ekmekleri kim bırakıyor acaba?", "backdrop": "home", "light": "night", "camera": "medium",
+     "on_stage": [{"id": "selin", "x": 0.45, "face": 1, "action": "think"}], "props": [{"kind": "table", "x": 0.75, "scale": 0.8}, {"kind": "candle", "x": 0.75, "scale": 0.6}]},
+    {"speaker": "nuri", "text": "Bağırmak kolaydır evlat. Asıl zor olan, iyiliği saklamaktır.", "backdrop": "shop", "light": "day", "camera": "close",
+     "on_stage": [{"id": "nuri", "x": 0.5, "face": -1, "action": "talk"}]},
+    {"speaker": "tarcin", "text": "Sen olsan söyler miydin, saklar mıydın?", "backdrop": "shop", "light": "day", "camera": "wide",
+     "on_stage": [{"id": "nuri", "x": 0.3, "face": 1, "action": "idle"}, {"id": "tarcin", "x": 0.62, "face": -1, "action": "cheer"}]}
+  ],
+  "meta": {
+    "title": "Kimseye Bedava Ekmek Vermezdi",
+    "description": "Nuri Usta'nın fırınında pazarlık da veresiye de yoktu. Ama mahallenin kedisi Tarçın bir akşam bambaşka bir şey gördü. Sen olsan söyler miydin, saklar mıydın?\n\n#kuklatiyatrosu #hikaye #iyilik #fırın",
+    "tags": ["kukla tiyatrosu", "kısa hikaye", "iyilik", "fırıncı", "kedi", "animasyon", "hikaye", "duygusal hikaye"],
+    "pinned_comment": "Sen olsan Selin'e söyler miydin, yoksa sır mı tutardın?"
+  }
+}

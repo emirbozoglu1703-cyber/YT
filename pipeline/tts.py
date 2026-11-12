@@ -23,23 +23,41 @@ EDGE_VOICES = {
     "young": {"voice": "tr-TR-AhmetNeural", "rate": "+12%", "pitch": "+8Hz"},
     "woman": {"voice": "tr-TR-EmelNeural", "rate": "+4%", "pitch": "+0Hz"},
     "child": {"voice": "tr-TR-EmelNeural", "rate": "+10%", "pitch": "+25Hz"},
+    "man": {"voice": "tr-TR-AhmetNeural", "rate": "+4%", "pitch": "+0Hz"},
 }
 DEFAULT_SETTINGS = {"stability": 0.45, "similarity_boost": 0.8, "style": 0.35, "use_speaker_boost": True}
 
 
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def voice_config() -> dict:
+    try:
+        with open(os.path.join(ROOT, "config", "voices.json"), encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
+
+
 def pick_engine() -> str:
-    return os.environ.get("TTS_ENGINE") or ("elevenlabs" if os.environ.get("ELEVENLABS_API_KEY") else "edge")
+    return os.environ.get("TTS_ENGINE") or voice_config().get("engine") or ("elevenlabs" if os.environ.get("ELEVENLABS_API_KEY") else "edge")
+
+
+def _api_key() -> str:
+    # Claude Code bulut ortamında anahtar ağ vekili tarafından başlığa eklenir; burada yer tutucu yeterli.
+    return os.environ.get("ELEVENLABS_API_KEY") or "proxy-injected"
 
 
 def _voice_id(speaker: str) -> str:
-    v = os.environ.get(f"ELEVENLABS_VOICE_{speaker.upper()}") or os.environ.get("ELEVENLABS_VOICE_NARRATOR")
+    voices = voice_config().get("voices", {})
+    v = os.environ.get(f"ELEVENLABS_VOICE_{speaker.upper()}") or voices.get(speaker) or voices.get("narrator") or os.environ.get("ELEVENLABS_VOICE_NARRATOR")
     if not v:
-        raise RuntimeError("ELEVENLABS_VOICE_NARRATOR tanımlı değil")
+        raise RuntimeError(f"'{speaker}' için ElevenLabs ses ID'si yok: config/voices.json dosyasını doldurun")
     return v
 
 
 def duration(path: str) -> float:
-    out = subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "json", path])
+    out = subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "json", path], stderr=subprocess.DEVNULL)
     return float(json.loads(out)["format"]["duration"])
 
 
@@ -63,8 +81,8 @@ def tts_elevenlabs(text, speaker, out, settings=None):
     r = requests.post(
         f"https://api.elevenlabs.io/v1/text-to-speech/{_voice_id(speaker)}/with-timestamps",
         params={"output_format": "mp3_44100_128"},
-        headers={"xi-api-key": os.environ["ELEVENLABS_API_KEY"], "Content-Type": "application/json"},
-        json={"text": text, "model_id": os.environ.get("ELEVENLABS_MODEL", "eleven_multilingual_v2"), "language_code": "tr",
+        headers={"xi-api-key": _api_key(), "Content-Type": "application/json"},
+        json={"text": text, "model_id": os.environ.get("ELEVENLABS_MODEL") or voice_config().get("model", "eleven_multilingual_v2"), "language_code": "tr",
               "voice_settings": {**DEFAULT_SETTINGS, **(settings or {})}},
         timeout=180,
     )
@@ -148,11 +166,11 @@ def measure(path: str) -> dict:
 
 def transcribe(path: str) -> str | None:
     """ElevenLabs Speech-to-Text; anahtar yoksa None."""
-    if not os.environ.get("ELEVENLABS_API_KEY"):
+    if pick_engine() != "elevenlabs":
         return None
     try:
         with open(path, "rb") as f:
-            r = requests.post("https://api.elevenlabs.io/v1/speech-to-text", headers={"xi-api-key": os.environ["ELEVENLABS_API_KEY"]},
+            r = requests.post("https://api.elevenlabs.io/v1/speech-to-text", headers={"xi-api-key": _api_key()},
                               data={"model_id": os.environ.get("ELEVENLABS_STT_MODEL", "scribe_v1"), "language_code": "tur"},
                               files={"file": (os.path.basename(path), f, "audio/mpeg")}, timeout=120)
         r.raise_for_status()

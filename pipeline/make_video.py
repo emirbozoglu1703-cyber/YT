@@ -1,6 +1,6 @@
-"""Tek bir hikâye JSON'unu (ajanlar olmadan) videoya çevirir. Test ve elle üretim için.
+"""Hazır bir oyun dosyasını (cast + scenes) ajanlar olmadan videoya çevirir. Test ve elle üretim için.
 
-  python pipeline/make_video.py stories/samples/bakkal_ferit.json [--engine edge|elevenlabs|silent]
+  python pipeline/make_video.py stories/samples/firinci_nuri.json [--engine elevenlabs|edge|silent]
 """
 from __future__ import annotations
 
@@ -26,17 +26,17 @@ def main():
     engine = a.engine or tts.pick_engine()
     work = os.path.join(ROOT, "output", "manual", story["id"])
     os.makedirs(work, exist_ok=True)
-    lines = [{"text": s["text"], "speaker": s.get("speaker", "narrator")} for s in story["scenes"]]
-    vplan = [{"tts_text": s.get("tts_text", s["text"]), "speaker": s.get("speaker", "narrator"), "settings": s.get("voice_settings")} for s in story["scenes"]]
-    print(f"[{story['id']}] ses: {engine}")
-    vres = production.synth_lines(lines, vplan, work, engine)
-    for i, issue in enumerate(production.voice_auto_issues(lines, vres, vplan, engine)):
-        print("  ses uyarısı:", issue)
-    scenes = production.build_scenes(lines, story["scenes"], vres)
-    production.preview(scenes, os.path.join(work, "preview.jpg"))
-    mix, total = production.mix_audio(vres, scenes, story.get("music", "warm"), work)
-    video, thumb, sheet = production.render_final(scenes, mix, work, story["id"], story["title"])
-    print(f"[{story['id']}] {total:.1f} sn -> {video}")
+    script = {"cast": story["cast"], "lines": [{"speaker": s["speaker"], "text": s["text"]} for s in story["scenes"]]}
+    vplan = [{"tts_text": s.get("tts_text") or s["text"], "settings": s.get("voice_settings")} for s in story["scenes"]]
+    res = production.synth_lines(script, vplan, work, engine)
+    for issue in production.voice_issues(script, res, vplan, engine):
+        print("ses uyarısı:", issue)
+    th, warns = production.build_theater(story, res)
+    for w in warns:
+        print("düzen uyarısı:", w)
+    th.preview(os.path.join(work, "preview.jpg"))
+    video, sheet, _ = production.render_final(story, res, work, story["id"])
+    print("video:", video)
 
 
 if __name__ == "__main__":

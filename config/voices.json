@@ -1,0 +1,13 @@
+{
+  "engine": "elevenlabs",
+  "model": "eleven_multilingual_v2",
+  "_not": "ElevenLabs Voice Library'den Türkçe konuşabilen sesler seçip Voice ID'lerini buraya yazın. Kadrodaki her karakterin 'voice' alanı bu anahtarlardan biri olmalı.",
+  "voices": {
+    "narrator": "",
+    "man": "",
+    "old": "",
+    "young": "",
+    "woman": "",
+    "child": ""
+  }
+}
