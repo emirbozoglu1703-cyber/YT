@@ -1,11 +1,25 @@
 {
   "name": "Kıssa Defteri",
   "handle": "@kissadefteri",
-  "alternatives": ["Bir Dakika Kıssa", "Mürekkep Hikâyeler", "Hisse Defteri", "Eski Usta"],
-  "about": "Bir dakikada bir hikâye, bir hikâyede bir ders.\n\nOduncular, tüccarlar, ustalar ve çıraklar... Kuşaktan kuşağa anlatılan kıssaları kâğıt ve mürekkeple yeniden anlatıyoruz. Her gün yeni bir hikâye.\n\nSen hangi hikâyeyi duymak istersin? Yorumlara yaz, sıradaki onun olsun.",
-  "description_footer": "Her gün yeni bir kıssa için abone ol.\nSen olsan ne yapardın? Yorumlara yaz.\n\n#kıssa #hikaye #shorts #motivasyon #ders",
-  "default_tags": ["kıssa", "hikaye", "kıssadan hisse", "ibretlik hikaye", "motivasyon", "kısa hikaye", "shorts", "animasyon"],
+  "alternatives": [
+    "Bir Dakika Hikâye",
+    "Kâğıttan Hikâyeler",
+    "Hisse Defteri",
+    "Kâğıt Kıssa"
+  ],
+  "about": "Bir dakikada bir hikâye, bir hikâyede bir ders.\n\nEsnaflar, ustalar, komşular, arkadaşlar... Hayatın içinden küçük hikâyeleri kâğıttan kesilmiş karakterlerle anlatıyoruz. Her gün yeni hikâyeler.\n\nSen hangi konuda bir hikâye duymak istersin? Yorumlara yaz, sıradaki onun olsun.",
+  "description_footer": "Her gün yeni bir hikâye için abone ol.",
+  "default_tags": [
+    "kıssa",
+    "hikaye",
+    "kıssadan hisse",
+    "ibretlik hikaye",
+    "motivasyon",
+    "kısa hikaye",
+    "shorts",
+    "animasyon"
+  ],
   "category_id": "24",
   "pinned_comment": "Sıradaki hikâye hangi konuda olsun? 👇",
-  "upload_time_tr": "18:30"
+  "set_thumbnail": false
 }

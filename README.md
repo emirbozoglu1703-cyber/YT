@@ -1,90 +1,98 @@
-# Kıssa Defteri: otomatik Shorts kanalı
+# Kıssa Defteri: AI takımıyla günde 10 Short
 
-Kâğıt-mürekkep çizimli çöp adamlarla anlatılan 30-45 saniyelik kıssalar. Hikâyeyi yazmak, seslendirmek, animasyonu çizmek, kurgu, müzik, altyazı ve YouTube'a yükleme işlerinin hepsi bu repoda kodla yapılır. Her gün GitHub Actions üzerinde kendiliğinden çalışır.
+Kesik kâğıt (paper cut-out) stilinde, renkli karakterlerle anlatılan 30-45 saniyelik **özgün** mini hikâyeler.
+Her gün 11 ajanlık bir takım 10 video planlıyor, üretiyor, denetliyor ve gün içindeki en iyi saatlere zamanlıyor.
 
-## Burhan Kocabıyık'ın "Sıfır Maliyetle Viral Video Makinesi" videosundan alınanlar
+## Takım
 
-| Videodaki tespit | Bu repoda nasıl uygulandı |
-|---|---|
-| Videoları Claude Code **kod yazarak** üretiyor, ücretli video AI aracı yok | `pipeline/render.py`: Pillow ile kare kare çizim, ardından ffmpeg |
-| Tutan formatlar: piksel oda, harita, çubuk adam, **kâğıt-mürekkep** | Kâğıt dokusu, titreyen el çizimi çizgiler ve çöp adamlar |
-| **İlk cümlede çelişki** ("Hiç durmadı, yine de kaybetti") | Her hikâyenin ilk sahnesi bu kurala göre yazıldı, `write_story.py` de kurala uyuyor |
-| **2. saniyede ekran değişmeli** | Kamera her 2 sn'de bir punch-in/pan yapıyor, sahneler 1.5-3.5 sn sürüyor, aralarda mürekkep geçişi var |
-| **Hareket oranı yüksek olmalı** (sadece ağız oynayan AI slop izletmiyor) | Figürler sürekli nefes alıyor, yürüyor, balta sallıyor. Ağaçlar sallanıyor, sayaçlar sayıyor, çizgiler titriyor |
-| **Ses ve görüntü saniyesi saniyesine oturmalı** | Her sahne ayrı seslendiriliyor ve sahne süresi ses süresinden hesaplanıyor. Fark 0.5 sn'yi geçerse render hata veriyor |
-| Her saniyeden kare alıp kontrol ediyor | Her render sonrası `output/<id>/qa/contact_sheet.jpg` oluşuyor |
-| Seslendirme için ElevenLabs | Destekleniyor. Anahtar yoksa ücretsiz Microsoft Edge nöral sesi kullanılıyor |
-| Son: izleyiciye soru, "Yorumlara yaz" | Her hikâye böyle bitiyor, kanal da sabit yorum ekliyor |
-
-## ElevenLabs bağlamalı mıyız?
-
-**Başlangıçta gerek yok.** Sistem anahtar olmadan `tr-TR-AhmetNeural` (Edge TTS) ile tamamen ücretsiz çalışır. Bu ses iyidir ama biraz "okuyucu" gibi durur.
-
-**Önerim: ilk 10-15 video Edge ile çıksın. Tutan bir şey görünce ElevenLabs Starter planına geçin.**
-- ElevenLabs'in ücretsiz planı ticari kullanıma izin vermiyor ve atıf istiyor. Para kazanacak bir kanal için en düşük ücretli plan (Starter, ayda yaklaşık 5-6 $) gerekir. Fiyatları elevenlabs.io/pricing'den kontrol edin.
-- 40 saniyelik bir video yaklaşık 600 karakter tutuyor. Starter'ın aylık kotası günde 1 videoya fazlasıyla yetiyor.
-- Geçmek için GitHub Secrets'a `ELEVENLABS_API_KEY` ve `ELEVENLABS_VOICE_NARRATOR` eklemeniz yeterli. Voice Library'den Türkçe, sıcak, orta yaşlı bir erkek anlatıcı sesi seçin. İsterseniz `ELEVENLABS_VOICE_OLD` / `ELEVENLABS_VOICE_YOUNG` ile karakter sesleri de ekleyebilirsiniz.
-
-## Kurulum: sizin yapmanız gerekenler (bir kez, yaklaşık 20 dk)
-
-Bunları ben yapamam. Google hesabı açarken telefon doğrulaması ve CAPTCHA isteniyor, bunun otomatik yapılması da Google kurallarına aykırı.
-
-1. **Google hesabı ve kanal**
-   - Yeni bir Gmail açın (kişisel hesabınızdan ayrı tutmanız iyi olur).
-   - youtube.com'da sağ üstten **Kanal oluştur**'a tıklayın. Ad: **Kıssa Defteri**, tanıtıcı: **@kissadefteri** (alınmışsa `config/channel.json` içindeki alternatiflerden birini seçin).
-   - "Hakkında" metni, kanal açıklaması ve etiketler `config/channel.json` dosyasında hazır, kopyalayıp yapıştırın.
-   - Profil resmi ve banner için `output/01_oduncu/thumbnail.jpg` gibi bir kare kullanılabilir.
-   - youtube.com/verify adresinden **telefonla doğrulayın**. Bu adım özel kapak resmi ve 15 dk üstü videolar için gerekli.
-2. **YouTube API anahtarı**
-   - console.cloud.google.com'da yeni bir proje açın ve **YouTube Data API v3**'ü etkinleştirin.
-   - OAuth consent screen: External seçin, kendinizi test kullanıcısı yapın, sonra **Publish app**'e basın. Test modunda kalırsa token 7 günde bir düşer.
-   - Credentials altından **OAuth client ID** oluşturun, türü **Desktop app** olsun. JSON'u `client_secret.json` adıyla indirin.
-   - Kendi bilgisayarınızda şunu çalıştırın: `pip install google-auth-oauthlib && python scripts/get_youtube_token.py client_secret.json`. Açılan tarayıcıda **kanal hesabıyla** giriş yapın.
-3. **GitHub Secrets** (repo > Settings > Secrets and variables > Actions):
-   - Zorunlu: `YT_CLIENT_ID`, `YT_CLIENT_SECRET`, `YT_REFRESH_TOKEN`
-   - İsteğe bağlı: `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_NARRATOR` (doğal ses için), `ANTHROPIC_API_KEY` (kuyruk bitince yeni hikâyeleri kendisi yazsın diye)
-4. **İlk deneme:** Actions > "Günlük Short" > Run workflow, privacy = `private`. Studio'da videoya bakın. Beğenirseniz bundan sonra her gün 18:17'de kendiliğinden **public** yayınlanır.
-
-> Not: Google API'nin günlük kotası 10.000 birim, bir yükleme ~1.600 birim. Yani günde 6 videoya kadar sorun yok.
-
-## Kanal kimliği ve "AI olduğu anlaşılmasın" konusu
-
-Kanal adı, açıklama ve başlıklarda AI geçmiyor. Kanal sıradan bir hikâye kanalı gibi duruyor. Buna engel bir kural yok, ama bilmeniz gereken iki YouTube kuralı var:
-
-1. **Sentetik içerik etiketi:** YouTube, *gerçekçi* görünen ve gerçek sanılabilecek AI içeriği (gerçek bir kişiyi konuşturmak, gerçekte olmamış bir olayı gerçek gibi göstermek, gerçekçi insan/mekân görüntüsü) için yüklemede "değiştirilmiş/sentetik içerik" kutusunun işaretlenmesini zorunlu tutuyor. Bizim çizgi animasyonlu, açıkça kurgu olan kıssalarımız bu kapsamda değil, bu yüzden kod bu alanı `false` gönderiyor. İleride gerçekçi görüntü kullanırsanız hikâye JSON'una `"synthetic_realistic": true` yazın, kutu otomatik işaretlenir. Bu kutuyu gerektiği halde işaretlememek videonun kaldırılmasına ve YPP'den (para kazanma) atılmaya yol açabilir.
-2. **"Seri üretilmiş / tekrarlayan içerik" kuralı (para kazanma):** YouTube 2025'ten beri birbirinin kopyası gibi duran, şablonla seri üretilmiş videolara para ödemiyor. Risk AI etiketinde değil, **tekrarda**. Bu yüzden her hikâye farklı ve özgün kurgulu olmalı. Formatı haftada bir değiştirmek de işe yarar (yeni mekân, yeni karakter, seri hikâyeler). Kendi sesinizle seslendirilmiş ara sıra bir video da kanalın "insan emeği" tarafını güçlendirir.
-
-Ben de kanalı izleyicilere "gerçek bir insan anlatıcı" diye tanıtacak sahte bir biyografi yazmadım. Gerek de yok, kıssa kanallarında anlatıcının kim olduğunu kimse sormuyor.
-
-## Günlük kullanım
-
-```bash
-pip install -r requirements.txt            # + sistemde ffmpeg
-python pipeline/make_video.py --next       # kuyruktaki ilk hikâyeyi üretir -> output/<id>/<id>.mp4
-python pipeline/make_video.py stories/queue/03_iki_kova.json --engine edge
-python pipeline/make_video.py --next --upload --privacy unlisted
-python pipeline/write_story.py --count 5 --force   # Claude ile 5 yeni hikâye
+```
+                         ┌──────────────────────┐
+                         │     BAŞ DENETÇİ      │  denetçileri denetler, son onay,
+                         │  (her video için)    │  gerekirse aşamayı geri gönderir
+                         └──────────┬───────────┘
+      ┌──────────────┬──────────────┼──────────────┬──────────────┐
+ Strateji Den.   Senaryo Den.    Ses Den.      Görsel Den.    Yayın Den.      ← DENETÇİLER (red → tekrar, en fazla 3 tur)
+      │              │              │              │              │
+ Strateji &      Senarist       Ses Ajanı     Görsel         Yayın Ajanı     ← AJANLAR
+ Program                       (ElevenLabs)   Yönetmen
+ 10 saat +       özgün hikâye   seslendirme,   sahne düzeni   başlık, açıklama,
+ 10 hikâye özeti metni          okunuş, ayar   → render       etiket, zamanlama
 ```
 
-- `stories/queue/` → yayın sırası (dosya adına göre). Yüklenen hikâye `stories/published/`'a taşınır ve YouTube ID'si içine yazılır.
-- Yeni hikâyeyi elle de ekleyebilirsiniz. Şema için `stories/queue/01_oduncu.json`'a ya da `pipeline/write_story.py` içindeki açıklamaya bakın.
-- Kullanılabilen pozlar: `stand walk work sit laugh point think cheer sad run talk`
-- Kullanılabilen objeler: `tree stump logs sun moon cloud house mountain coins clock road birds heart question bubble`
-
-## Maliyet
-
-| Kalem | Ücretsiz yol | İsteğe bağlı |
+| Ajan | Ne yapar | Denetçisi neye bakar |
 |---|---|---|
-| Animasyon + kurgu | Bu repo (0 ₺) | |
-| Seslendirme | Edge TTS (0 ₺) | ElevenLabs Starter (~5 $/ay) |
-| Müzik | Kodla üretiliyor, telif yok (0 ₺) | |
-| Sunucu | GitHub Actions (public repo'da sınırsız, private'ta ayda 2000 dk) | |
-| Yeni hikâye yazımı | Kuyruğa elle ekleme ya da Claude Code'a "5 yeni hikâye yaz" demek | Anthropic API (video başına birkaç cent) |
+| **Strateji & Program** | Kanalın geçmiş izlenme verisine bakıp günün 10 yayın saatini ve 10 farklı hikâye özetini çıkarır | Saat kuralları, tema çeşitliliği, bilinen masal kopyası, hassas konu |
+| **Senarist** | Özetten özgün hikâye yazar (çelişkili kanca, twist, ders, soru) | Kanca gücü, özgünlük, yapı, **Türkçe yazım**, mantık. Programatik kontrol: kelime/satır sayısı, yasaklı kelime |
+| **Ses Ajanı** | Her satırın okunuşunu ("36" → "otuz altı"), konuşmacısını ve ElevenLabs duygu ayarlarını belirler, sesi üretir | Ölçümler: konuşma hızı, ses patlaması, uzun duraklama, **sesin yazıya dökülmüş hali ile senaryonun benzerliği** (ElevenLabs STT) |
+| **Görsel Yönetmen** | Her satır için sahne tasarlar (karakter, poz, obje, kamera, yazı); render motoru çizer | **Render edilmiş kareleri görerek** çakışma, taşma, okunabilirlik, anlam uyumu, karakter sürekliliği, ekrandaki yazım hataları |
+| **Yayın Ajanı** | Başlık, açıklama, etiket ve ilk yorumu yazar, videoyu saatine zamanlar | Başlık uzunluğu, yanıltıcılık, yazım, AI kelimesi geçmemesi, spam etiket |
+| **Baş Denetçi** | Bitmiş videonun karelerini, ses tablosunu, metinleri ve **tüm denetim kayıtlarını** görür | Her denetçiyi tek tek puanlar (kaçırdı mı, gereksiz mi reddetti?). Onay verir ya da sorunlu aşamayı talimatla geri gönderir |
 
-## Büyüme ipuçları (videodan ve Shorts verilerinden)
+Akış: bir denetçi reddederse, ajan geri bildirimle aynı işi baştan yapar (en fazla 3 tur). Baş denetçi bir aşamayı en fazla 2 kez geri gönderebilir; o aşamadan sonraki her şey yeniden üretilir. Yine onay çıkmazsa tamamen yeni bir senaryoyla bir kez daha denenir. O da olmazsa **video yayınlanmaz**, kalitesiz video yüklenmez.
 
-- İlk 1 saniyede çelişkili cümle, 2. saniyede görüntü değişimi. Bu kurgu hazır geliyor, bozmayın.
-- 30-45 sn ideal. 60 sn'yi geçmeyin.
-- Her gün aynı saatte yayın yapın, ilk 30 gün tek bir formattan sapmayın.
-- 20 videodan sonra Studio > Analytics'te "izlemeye devam eden %" en yüksek olan 3 videoyu bulun. Kuyruğa onlara benzeyen hikâyeler ekleyin, `write_story.py`'nin sistem metnine de "şu başlıklar tuttu" diye yazın.
-- YPP eşiği: 1.000 abone ve 90 günde 10 milyon Shorts izlenmesi (ya da 4.000 saat uzun video).
+Ayrıca programatik bir **düzen denetçisi** (`render.lint_scene`) her sahneyi render öncesi kontrol eder: ekrandan taşma, karakter çakışması, ağaç/ev gibi objelerin karaktere binmesi, balon ile büyük yazının çakışması. Düzeltebildiğini düzeltir, gerisini görsel denetçiye bildirir.
+
+## Günlük işleyiş (GitHub Actions)
+
+| Saat (TR) | İş |
+|---|---|
+| 04:23 | `plan`: strateji ajanı + denetçisi günün planını çıkarır, önceki videoların izlenmelerini YouTube'dan çeker |
+| 04:25-05:30 | `produce` ×10 (4'er paralel): her video kendi ajan zincirinden geçer, gizli olarak yüklenip saatine zamanlanır |
+| ~05:30 | `finalize`: `reports/<tarih>.md` günlük rapor (başlıklar, kalite puanları, denetim turları, maliyet), `data/history.jsonl` güncellenir |
+| 08:07-00:07, 2 saatte bir | `comments`: yayına giren videolara kanalın ilk yorumunu yazar (zamanlanmış gizli videoya yorum yazılamıyor) |
+
+### Yayın saatleri nasıl belirleniyor?
+Türkiye'ye özel saatlik Shorts verisi kamuya açık değil. Bu yüzden başlangıç saatleri genel kullanıcı davranışına göre seçildi (`config/schedule.json`):
+- **Hafta içi:** 07:40, 10:20, 12:20, 13:40, 16:10, 17:50, 19:10, 20:20, 21:30, 22:45 (sabah işe/okula gidiş, öğle arası, iş çıkışı ve en yoğun akşam bandı 20-23)
+- **Hafta sonu:** 09:20'den 22:50'ye kadar gün boyuna yayılmış
+
+Shorts yayından sonraki 1-2 saatte ilk test kitlesine gösterildiği için saatler yoğunluğun hemen öncesine konuldu. Strateji ajanı her gün kanalın **kendi** verisine bakar (hangi saatte yayınlanan video 48 saatte kaç izlendi) ve saatleri günde en fazla 2 dilim / 45 dk kaydırarak öğrenir. YouTube Studio → Analytics → "İzleyicileriniz YouTube'da ne zaman" grafiği oluşunca (birkaç hafta sonra) `config/schedule.json`'a o saatleri yazmanız da iyi olur.
+
+## Kurulum (bir kez)
+
+1. **YouTube kanalı:** Gmail açın → YouTube → Kanal oluştur → ad **Kıssa Defteri**. Hakkında metni `config/channel.json`'da. youtube.com/verify ile telefon doğrulaması yapın.
+2. **YouTube API:** console.cloud.google.com → yeni proje → *YouTube Data API v3*'ü etkinleştirin.
+   - OAuth consent screen: External seçin, sonra **Publish app** deyin. Test modunda kalırsa token 7 günde düşer.
+   - Credentials → OAuth client ID → *Desktop app* → JSON'u indirin.
+   - Kendi bilgisayarınızda: `pip install google-auth-oauthlib && python scripts/get_youtube_token.py client_secret.json`
+3. **Anthropic API anahtarı** (ajanların beyni): console.anthropic.com → API Keys.
+4. **ElevenLabs:** elevenlabs.io → API key. Voice Library'den Türkçe sesler seçip Voice ID'lerini alın (anlatıcı + isteğe bağlı yaşlı / genç / kadın / çocuk).
+5. **GitHub → Settings → Secrets and variables → Actions:**
+   - Secrets: `ANTHROPIC_API_KEY`, `YT_CLIENT_ID`, `YT_CLIENT_SECRET`, `YT_REFRESH_TOKEN`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_NARRATOR`, (isteğe bağlı) `ELEVENLABS_VOICE_OLD`, `_YOUNG`, `_WOMAN`, `_CHILD`
+   - Variables (isteğe bağlı): `AGENT_MODEL`, `REVIEW_MODEL` (maliyet için, aşağıya bakın), `ELEVENLABS_MODEL`
+6. **Bu branch'i `main`'e merge edin.** Zamanlanmış işler sadece varsayılan branch'te çalışır.
+7. **İlk deneme:** Actions → "Günlük AI Takımı" → Run workflow → `daily_videos: 2`, `upload: false`. Artifact'lardan videoları ve `final_sheet.jpg` karelerini indirip bakın. Beğenirseniz `upload: true` ile bir kez daha deneyin. Sonra her gün kendiliğinden çalışır.
+
+## Maliyet (yaklaşık, günde 10 video)
+
+| Kalem | Tahmin | Not |
+|---|---|---|
+| Anthropic (11 ajan, Opus 5.5) | video başı ~0,4-0,8 $ → **ayda ~120-240 $** | Her video ~13-25 çağrı (retry'lere göre). `REVIEW_MODEL=claude-sonnet-5-5` ile denetçiler ucuzlar, ama denetim kalitesi düşebilir. Karar sizin. |
+| ElevenLabs | ayda ~200-250 bin karakter | `eleven_multilingual_v2` ile **Pro** plan gerekir. `ELEVENLABS_MODEL=eleven_flash_v2_5` karakter başına yarım kredi harcar, **Creator** plana sığabilir ama kalite biraz düşer. Planları elevenlabs.io/pricing'den kontrol edin. |
+| YouTube API | 0 ₺ | Haziran 2026'dan beri yüklemelerin ayrı bir kotası var: günde 100 yükleme. 10 video sorun değil. |
+| GitHub Actions | Public repo: 0 ₺. Private: ayda ~1.500-2.000 dk | Private repoda ücretsiz 2.000 dk sınırına yaklaşır. |
+
+Her günlük raporda gerçek ajan maliyeti yazar.
+
+## ⚠️ Günde 10 video için bilmeniz gerekenler
+- **Seri üretim kuralı:** YouTube, birbirine benzeyen seri üretilmiş videolara para ödemiyor (YPP "tekrarlayan / özgün olmayan içerik" politikası). Asıl risk budur. Ajanlara her videonun özgün hikâye, farklı tema ve mekânla olmasını şart koştum. Yine de ilk 2-3 hafta **günde 3-5 video** ile başlayıp raporlara bakmanızı, kaliteden eminseniz 10'a çıkmanızı öneririm (`config/schedule.json` → `daily_videos`).
+- **Sentetik içerik etiketi:** Çizgi/animasyon hikâyelerde gerekmiyor, kod `false` gönderiyor. İleride gerçekçi görüntü eklenirse açılmalı.
+- **Kanal kimliği:** Ad, açıklama, başlık ve yorumlarda AI geçmiyor. Bunu senaryo, yayın denetçisi ve baş denetçi ayrıca kontrol ediyor.
+
+## Yerel kullanım
+
+```bash
+pip install -r requirements.txt   # + ffmpeg
+python pipeline/team.py demo                              # API anahtarı olmadan tüm takım akışını sahte ajanlarla dener
+python pipeline/make_video.py stories/samples/bakkal_ferit.json --engine edge   # tek hikâye, ajansız
+python pipeline/team.py plan                              # gerçek ajanlarla bugünün planı
+python pipeline/team.py produce --index 0 --no-upload     # planın 1. videosu, yüklemeden
+```
+
+Dosyalar:
+- `pipeline/agents/roles.py`: ajanların görev tanımları (prompt'lar). Kanalın tonunu değiştirmek için burayı düzenleyin.
+- `pipeline/team.py`: orkestratör, denetim döngüleri
+- `pipeline/render.py`: kesik kâğıt render motoru + düzen denetçisi
+- `pipeline/tts.py`: ses, kelime zamanları, ölçümler
+- `config/schedule.json`: video sayısı ve saatler
+- `reports/`, `data/history.jsonl`: günlük raporlar ve performans geçmişi

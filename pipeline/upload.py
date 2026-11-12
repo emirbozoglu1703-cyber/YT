@@ -34,7 +34,8 @@ def channel_cfg() -> dict:
         return json.load(f)
 
 
-def upload(meta: dict, privacy: str = "public") -> str:
+def upload(meta: dict, privacy: str = "public", publish_at=None) -> str:
+    """publish_at (datetime) verilirse video gizli yüklenir ve o saatte YouTube tarafından yayınlanır."""
     cfg = channel_cfg()
     desc = meta["description"].strip() + "\n\n" + cfg.get("description_footer", "")
     tags = list(dict.fromkeys(meta.get("tags", []) + cfg.get("default_tags", [])))[:30]
@@ -59,8 +60,9 @@ def upload(meta: dict, privacy: str = "public") -> str:
             "containsSyntheticMedia": bool(meta.get("synthetic_realistic", False)),
         },
     }
-    if os.environ.get("YT_PUBLISH_AT") and privacy == "private":
-        body["status"]["publishAt"] = os.environ["YT_PUBLISH_AT"]
+    if publish_at is not None:
+        body["status"]["privacyStatus"] = "private"
+        body["status"]["publishAt"] = publish_at.astimezone(__import__("datetime").timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     yt = client()
     req = yt.videos().insert(part="snippet,status", body=body,
@@ -71,13 +73,15 @@ def upload(meta: dict, privacy: str = "public") -> str:
         if status:
             print(f"  yükleniyor %{int(status.progress() * 100)}")
     vid = resp["id"]
-    try:
-        yt.thumbnails().set(videoId=vid, media_body=MediaFileUpload(meta["thumbnail"])).execute()
-    except Exception as e:  # özel kapak için kanalın telefonla doğrulanmış olması gerekir
-        print(f"  kapak yüklenemedi (kanal doğrulaması gerekebilir): {e}")
-    if cfg.get("pinned_comment"):
+    if cfg.get("set_thumbnail") and meta.get("thumbnail"):  # Shorts akışında kapak görünmez; varsayılan kapalı
         try:
-            yt.commentThreads().insert(part="snippet", body={"snippet": {"videoId": vid, "topLevelComment": {"snippet": {"textOriginal": cfg["pinned_comment"]}}}}).execute()
+            yt.thumbnails().set(videoId=vid, media_body=MediaFileUpload(meta["thumbnail"])).execute()
+        except Exception as e:
+            print(f"  kapak yüklenemedi (kanal doğrulaması gerekebilir): {e}")
+    comment = meta.get("pinned_comment") or cfg.get("pinned_comment")
+    if comment and publish_at is None:  # zamanlanmış (gizli) videoya yorum yazılamaz; finalize sonrası eklenir
+        try:
+            yt.commentThreads().insert(part="snippet", body={"snippet": {"videoId": vid, "topLevelComment": {"snippet": {"textOriginal": comment}}}}).execute()
         except Exception as e:
             print(f"  yorum eklenemedi: {e}")
     return vid
