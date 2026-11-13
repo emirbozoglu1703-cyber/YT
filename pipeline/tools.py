@@ -33,7 +33,7 @@ import tts  # noqa: E402
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TZ = ZoneInfo("Europe/Istanbul")
 BANNED = re.compile(r"yapay zek|\bai\b|\ba\.i\.|\bbot\b|otomatik üret|chatgpt|claude|elevenlabs|anthropic", re.I)
-VOICE_KEYS = {"narrator", "man", "old", "young", "woman", "child"}
+VOICE_KEYS = {"narrator", "man", "old", "young", "woman", "child", "oldwoman"}
 
 
 def load(p, default=None):
@@ -174,6 +174,9 @@ def cmd_check_script(a):
             issues.append("'Yorumlara yaz' kalıbı kullanma; soru kendi başına yeterli")
     if not 8 <= len(s.get("banner", "")) <= 34:
         issues.append(f"banner {len(s.get('banner', ''))} karakter (8-34 olmalı): videonun üstünde duran merak başlığı")
+    b = load(os.path.join(a.dir, "brief.json"), {})
+    if b.get("channel") and s.get("channel") != b["channel"]:
+        issues.append(f"script.json'da \"channel\": \"{b['channel']}\" olmalı")
     for k in ("working_title", "moral", "music"):
         if not s.get(k):
             issues.append(f"{k} boş")
@@ -296,6 +299,60 @@ def cmd_status(a):
               f"video{f('short.mp4')} metin{f('meta.json')} onay{'✓' if ap.get('approved') else ('✗' if ap else '·')} paket{'✓' if q else '·'}")
 
 
+# ------------------------------------------------------------------ toplu üretim (çok kanallı)
+BATCH = os.path.join(ROOT, "work", "batch")
+
+
+def cmd_batch_init(a):
+    data = load(os.path.join(ROOT, "data", "batch", "briefs.json"))
+    n = 0
+    for ch, briefs in data["channels"].items():
+        for i, b in enumerate(briefs):
+            d = os.path.join(BATCH, ch, f"{i:02d}")
+            os.makedirs(os.path.join(d, "reviews"), exist_ok=True)
+            save(os.path.join(d, "brief.json"), {"channel": ch, "index": i, "brief": b})
+            n += 1
+    print(f"{n} klasör hazır: {BATCH}/<kanal>/<NN>")
+
+
+def cmd_batch_status(a):
+    f = lambda d, n: os.path.exists(os.path.join(d, n))
+    tot = {}
+    for d in sorted(glob.glob(os.path.join(BATCH, "*", "*"))):
+        ap = load(os.path.join(d, "approval.json"), {})
+        row = [f(d, "script.json"), f(d, "voice_report.json"), f(d, "staging.json"), f(d, "short.mp4"), f(d, "meta.json"), bool(ap.get("approved"))]
+        ch = d.split(os.sep)[-2]
+        tot.setdefault(ch, [0] * 6)
+        tot[ch] = [x + int(y) for x, y in zip(tot[ch], row)]
+        if a.verbose:
+            print(os.path.relpath(d, BATCH), " ".join("✓" if x else "·" for x in row), "ONAY" if ap.get("approved") else ("RED" if ap else ""))
+    print(f"{'kanal':<20} senaryo ses sahne video metin onay")
+    for ch, t in tot.items():
+        print(f"{ch:<20} " + "  ".join(f"{x:>5}" for x in t))
+
+
+def cmd_export(a):
+    """Onaylı videoları kanal kanal output/kanallar/<kanal>/ altına, yükleme metinleriyle birlikte kopyalar."""
+    chans = load(os.path.join(ROOT, "config", "channels.json"), {})
+    out = os.path.join(ROOT, "output", "kanallar")
+    n = 0
+    for d in sorted(glob.glob(os.path.join(BATCH, "*", "*"))):
+        ap = load(os.path.join(d, "approval.json"), {})
+        if not (ap.get("approved") or a.all) or not os.path.exists(os.path.join(d, "short.mp4")):
+            continue
+        ch = d.split(os.sep)[-2]
+        m = load(os.path.join(d, "meta.json"), {})
+        name = chans.get(ch, {}).get("name", ch)
+        dst = os.path.join(out, name)
+        os.makedirs(dst, exist_ok=True)
+        base = f"{os.path.basename(d)}_{re.sub(r'[^0-9A-Za-zÇĞİÖŞÜçğıöşü]+', '_', m.get('title', 'video'))[:50].strip('_')}"
+        shutil.copy(os.path.join(d, "short.mp4"), os.path.join(dst, base + ".mp4"))
+        with open(os.path.join(dst, base + ".txt"), "w", encoding="utf-8") as f:
+            f.write(f"BAŞLIK:\n{m.get('title', '')} #shorts\n\nAÇIKLAMA:\n{m.get('description', '')}\n\nETİKETLER:\n{', '.join(m.get('tags', []))}\n\nİLK YORUM:\n{m.get('pinned_comment', '')}\n")
+        n += 1
+    print(f"{n} video dışa aktarıldı: {out}")
+
+
 def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -307,9 +364,13 @@ def main():
         p = sub.add_parser(c); p.add_argument("dir")
     p = sub.add_parser("voice"); p.add_argument("dir"); p.add_argument("--engine")
     p = sub.add_parser("status"); p.add_argument("date")
+    sub.add_parser("batch-init")
+    p = sub.add_parser("batch-status"); p.add_argument("-v", "--verbose", action="store_true")
+    p = sub.add_parser("export"); p.add_argument("--all", action="store_true")
     a = ap.parse_args()
     {"context": cmd_context, "check-plan": cmd_check_plan, "new": cmd_new, "check-script": cmd_check_script, "voice": cmd_voice,
-     "preview": cmd_preview, "render": cmd_render, "check-meta": cmd_check_meta, "package": cmd_package, "status": cmd_status}[a.cmd](a)
+     "preview": cmd_preview, "render": cmd_render, "check-meta": cmd_check_meta, "package": cmd_package, "status": cmd_status,
+     "batch-init": cmd_batch_init, "batch-status": cmd_batch_status, "export": cmd_export}[a.cmd.replace("_", "-")](a)
 
 
 if __name__ == "__main__":

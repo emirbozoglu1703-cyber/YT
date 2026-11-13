@@ -17,13 +17,14 @@ import subprocess
 
 import requests
 
-EDGE_VOICES = {
-    "narrator": {"voice": "tr-TR-AhmetNeural", "rate": "+6%", "pitch": "-2Hz"},
-    "old": {"voice": "tr-TR-AhmetNeural", "rate": "-6%", "pitch": "-12Hz"},
-    "young": {"voice": "tr-TR-AhmetNeural", "rate": "+12%", "pitch": "+8Hz"},
-    "woman": {"voice": "tr-TR-EmelNeural", "rate": "+4%", "pitch": "+0Hz"},
-    "child": {"voice": "tr-TR-EmelNeural", "rate": "+10%", "pitch": "+25Hz"},
-    "man": {"voice": "tr-TR-AhmetNeural", "rate": "+4%", "pitch": "+0Hz"},
+EDGE_VOICES = {  # Microsoft'ta 2 Türkçe ses var; karakterler perde (pitch) ve hızla ayrılır
+    "narrator": {"voice": "tr-TR-AhmetNeural", "rate": "+4%", "pitch": "-4Hz"},
+    "man": {"voice": "tr-TR-AhmetNeural", "rate": "+8%", "pitch": "+2Hz"},
+    "old": {"voice": "tr-TR-AhmetNeural", "rate": "-8%", "pitch": "-16Hz"},
+    "young": {"voice": "tr-TR-AhmetNeural", "rate": "+14%", "pitch": "+12Hz"},
+    "woman": {"voice": "tr-TR-EmelNeural", "rate": "+6%", "pitch": "+0Hz"},
+    "child": {"voice": "tr-TR-EmelNeural", "rate": "+12%", "pitch": "+28Hz"},
+    "oldwoman": {"voice": "tr-TR-EmelNeural", "rate": "-8%", "pitch": "-10Hz"},
 }
 DEFAULT_SETTINGS = {"stability": 0.45, "similarity_boost": 0.8, "style": 0.35, "use_speaker_boost": True}
 
@@ -117,10 +118,17 @@ def tts_elevenlabs(text, speaker, out, settings=None):
 def tts_edge(text, speaker, out, settings=None):
     import edge_tts
 
+    text = strip_tags(text)  # Microsoft sesleri [whispers] gibi işaretleri anlamaz, okurdu
     v = {**EDGE_VOICES.get(speaker, EDGE_VOICES["narrator"]), **{k: s for k, s in (settings or {}).items() if k in ("rate", "pitch")}}
 
+    proxy = os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy")
+    if proxy and os.path.exists("/root/.ccr/ca-bundle.crt"):  # Claude Code bulut ortamı: vekil sunucu + onun CA'sı
+        import ssl
+        import edge_tts.communicate as _c
+        _c._SSL_CTX = ssl.create_default_context(cafile="/root/.ccr/ca-bundle.crt")
+
     async def run():
-        comm = edge_tts.Communicate(text, v["voice"], rate=v["rate"], pitch=v["pitch"], boundary="WordBoundary")
+        comm = edge_tts.Communicate(text, v["voice"], rate=v["rate"], pitch=v["pitch"], boundary="WordBoundary", proxy=proxy)
         starts = []
         with open(out, "wb") as f:
             async for ch in comm.stream():

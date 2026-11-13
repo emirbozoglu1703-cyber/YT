@@ -1,0 +1,57 @@
+{
+  "vicdan-testi": {
+    "name": "Vicdan Testi",
+    "genre": "Ahlaki ikilem ve sosyal deney. Biri sınanır (cüzdan, yanlış verilen para üstü, kayıp çocuk, kopya, terfi), izleyici kendi seçimini yapar.",
+    "tone": "gergin, düşündürücü, sonda sıcak ya da şaşırtıcı",
+    "format": "Açılış: sınavı kuran kukla seyirciye kuralı söyler. Ortada en az iki farklı tepki. Twist: göründüğü gibi olmayan biri. Kapanış: 'Sen olsan ne yapardın?' tarzı, taraf tutturan seçim sorusu.",
+    "backdrops": ["office", "street", "market", "shop", "school"],
+    "music": "mystery",
+    "banner_color": [150, 30, 40],
+    "hashtags": ["#vicdantesti", "#sosyaldeney", "#senolsan"],
+    "about": "Bir dakikalık vicdan sınavları. Sen olsan ne yapardın?"
+  },
+  "mahalle-kuklalari": {
+    "name": "Mahalle Kuklaları",
+    "genre": "Gündelik hayat komedisi: mahalle, esnaf, aile, komşu, kedi-köpek, okul, iş yeri. Herkesin yaşadığı tanıdık anlar.",
+    "tone": "esprili, sıcak, abartılı karakterler, temiz mizah",
+    "format": "Açılış: tanıdık bir durum ya da iddialı bir cümle. 2-3 kez tırmanan gag (kural üçlüsü). Son replik bir punchline. Kapanış: 'Sizin evde de böyle mi?' tarzı, herkesin kendini bulduğu soru.",
+    "backdrops": ["home", "street", "market", "shop", "school", "village"],
+    "music": "playful",
+    "banner_color": [214, 120, 30],
+    "hashtags": ["#komedi", "#mahalle", "#gülmekgaranti"],
+    "about": "Mahallenin en çok konuşan kuklaları. Her gün yeni bir skeç."
+  },
+  "kukla-bilgi": {
+    "name": "Kukla Bilgi",
+    "genre": "'Bunu biliyor muydun?' Kuklalar şaşırtıcı ama DOĞRULUĞU KESİN, iyi bilinen bir bilgiyi küçük bir skeçle anlatır (bilim, doğa, hayvanlar, beden, tarih, gündelik nesneler).",
+    "tone": "meraklı, eğlenceli, öğretici ama ders gibi değil",
+    "format": "Açılış: yanlış bilinen bir şeyi iddia eden kukla ya da şaşırtıcı bir soru. Bilgili kukla (dede, öğretmen, baykuş) adım adım açıklar. Somut rakam/örnek. Kapanış: 'Sen bunu biliyor muydun?' ya da 'Hangisi daha şaşırtıcı?' Tartışmalı, şüpheli ya da sağlık tavsiyesi niteliğinde bilgi YOK.",
+    "backdrops": ["school", "home", "forest", "sea", "village", "palace"],
+    "music": "hopeful",
+    "banner_color": [40, 110, 160],
+    "hashtags": ["#bunubiliyormuydun", "#bilgi", "#ilginçbilgiler"],
+    "about": "Kuklalardan bir dakikada şaşırtıcı bilgiler."
+  },
+  "gece-perdesi": {
+    "name": "Gece Perdesi",
+    "genre": "Gizem ve gerilim: kaybolan eşyalar, gece gelen tuhaf sesler, tanınmayan misafir, eski evdeki not, kimin yaptığı bilinmeyen olaylar. Korku/vahşet YOK; çözümü mantıklı.",
+    "tone": "gizemli, gerilimli, sonda mantıklı ve tatmin edici çözüm",
+    "format": "Açılış: gecenin içinde tuhaf bir olay. Ipuçları sahneye serpiştirilir. Twist: çözüm önceden verilmiş bir ipucuna dayanır. Kapanış: 'Sen ipucunu fark ettin mi?' ya da 'Kim olduğunu tahmin etmiştin?'",
+    "backdrops": ["home", "street", "forest", "village", "palace"],
+    "music": "mystery",
+    "banner_color": [60, 50, 110],
+    "hashtags": ["#gizem", "#gerilim", "#sonunubekle"],
+    "about": "Perde gece açılır. Her gizemin mantıklı bir çözümü var."
+  },
+  "para-kuklalari": {
+    "name": "Para Kuklaları",
+    "genre": "Para dersleri: tasarruf, borç, taksit tuzağı, dolandırıcılık yöntemleri (sahte mesaj, sahte ilan), pazarlık, ilk maaş, birikim, fiyat-değer. Yatırım tavsiyesi (hisse/kripto al-sat) YOK.",
+    "tone": "zekice, uyarıcı, akılda kalıcı rakamlarla",
+    "format": "Açılış: somut bir para durumu ya da tuzak ('Bu mesaj gelirse sakın tıklama'). İki karakterin farklı kararı ve sonuçları, somut rakamlarla. Kapanış: 'Sen hangisini seçerdin?' ya da 'Senin başına geldi mi?'",
+    "backdrops": ["office", "shop", "market", "home", "street"],
+    "music": "warm",
+    "banner_color": [40, 120, 70],
+    "hashtags": ["#para", "#tasarruf", "#dolandırıcılık"],
+    "about": "Paranı koru, akıllı harca. Kuklalardan bir dakikalık para dersleri."
+  }
+}

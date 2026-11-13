@@ -948,8 +948,9 @@ def lint_scene(sd: dict, cast_ids: set) -> tuple[dict, list[str]]:
 
 
 class Theater:
-    def __init__(self, cast: list[dict], scenes: list[TScene], banner: str = ""):
+    def __init__(self, cast: list[dict], scenes: list[TScene], banner: str = "", banner_color=None):
         self.banner = banner
+        self.banner_color = banner_color
         self._banner = None
         self.puppets = {c["id"]: Puppet(c) for c in cast}
         self.scenes = scenes
@@ -1165,7 +1166,8 @@ class Theater:
                 fnt = font(FONT_BOLD, size)
                 lines = wrap(d, self.banner, fnt, W - 120)
             h = 60 + len(lines) * int(size * 1.18)
-            d.rounded_rectangle([34, 40, W - 34, 40 + h], radius=26, fill=(250, 244, 228, 248), outline=(150, 30, 40, 255), width=8)
+            bc = tuple(self.banner_color) if self.banner_color else (150, 30, 40)
+            d.rounded_rectangle([34, 40, W - 34, 40 + h], radius=26, fill=(250, 244, 228, 248), outline=bc + (255,), width=10)
             for i, l in enumerate(lines):
                 d.text((W / 2, 40 + 30 + i * size * 1.18 + size / 2), l, font=fnt, fill=(40, 22, 20), anchor="mm")
             self._banner = band
@@ -1240,4 +1242,4 @@ def build(story: dict, durations: list[float], word_starts: list, outro=1.8):
     last = scenes[-1]
     scenes.append(TScene(text="", duration=outro, speaker="narrator", backdrop=last.backdrop, light=last.light, camera="wide",
                          on_stage=[{**p, "action": "bow"} for p in last.on_stage], props=last.props, is_outro=True))
-    return Theater(story["cast"], scenes, story.get("banner", "")), warns
+    return Theater(story["cast"], scenes, story.get("banner", ""), story.get("banner_color")), warns

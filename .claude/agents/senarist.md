@@ -32,7 +32,7 @@ script.json şeması:
 {"id": "kisa_ascii_slug", "working_title": "", "banner": "en fazla 34 karakter", "moral": "", "music": "playful|warm|mystery|hopeful",
  "cast": [  // 1-4 kukla, her biri tüm oyun boyunca aynı görünür
    {"id": "ascii_id", "name": "Ekranda görünen ad (ör. Nuri Usta)", "type": "human|cat|dog|fox|owl|crow|rabbit",
-    "voice": "narrator|man|old|young|woman|child",
+    "voice": "narrator|man|old|young|woman|child|oldwoman",
     // sadece human için:
     "gender": "male|female", "age": "child|adult|old", "outfit": "vest|suit|apron|dress|robe", "color": "red|blue|green|ochre|purple|teal|gray|brown|pink|navy|orange",
     "color2": "white|... (gömlek/alt renk)", "skin": "light|medium|tan|dark", "hair": "short|long|bun|bald", "hair_color": "black|brown|blond|red|gray|white",

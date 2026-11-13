@@ -65,6 +65,14 @@ def voice_issues(script, voice_res, voice_plan, engine):
     return hard
 
 
+def channel_cfg(name):
+    try:
+        with open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "config", "channels.json"), encoding="utf-8") as f:
+            return json.load(f).get(name or "", {})
+    except FileNotFoundError:
+        return {}
+
+
 def merged_story(script, staging, voice_plan=None):
     scenes = []
     for i, (line, st) in enumerate(zip(script["lines"], staging["scenes"])):
@@ -72,7 +80,9 @@ def merged_story(script, staging, voice_plan=None):
         if voice_plan:
             sc["tts_text"] = voice_plan[i].get("tts_text")
         scenes.append(sc)
-    return {"id": script.get("id", "oyun"), "title": script.get("working_title", ""), "banner": script.get("banner", ""), "music": script.get("music", "playful"),
+    ch = channel_cfg(script.get("channel"))
+    return {"id": script.get("id", "oyun"), "title": script.get("working_title", ""), "banner": script.get("banner", ""),
+            "channel": script.get("channel"), "banner_color": ch.get("banner_color"), "music": script.get("music") or ch.get("music", "playful"),
             "moral": script.get("moral", ""), "cast": script["cast"], "scenes": scenes}
 
 
