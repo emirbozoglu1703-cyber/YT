@@ -214,6 +214,42 @@ def similarity(a: str, b: str) -> float:
     return round(difflib.SequenceMatcher(None, norm(a), norm(b)).ratio(), 3)
 
 
+def compress_pauses(path: str, starts, max_pause: float = 0.32):
+    """Replik içindeki uzun sessizlikleri max_pause'a indirir (noktalama korunur, düz okuma olmaz).
+    Kelime başlangıç zamanlarını kesilen süreye göre kaydırır."""
+    err = subprocess.run(["ffmpeg", "-hide_banner", "-i", path, "-af", f"silencedetect=n=-42dB:d={max_pause}", "-f", "null", "-"],
+                         capture_output=True, text=True).stderr
+    ss = [float(x) for x in re.findall(r"silence_start: (-?[\d.]+)", err)]
+    ee = [float(x) for x in re.findall(r"silence_end: ([\d.]+)", err)]
+    cuts = []
+    for a, b in zip(ss, ee):
+        a = max(0.0, a)
+        if b - a > max_pause:
+            mid = (a + b) / 2
+            half = max_pause / 2
+            cuts.append((a + half, b - half))  # ortadaki fazlalığı kes
+    if not cuts:
+        return starts
+    expr = "+".join(f"between(t,{c0:.3f},{c1:.3f})" for c0, c1 in cuts)
+    tmp = path + ".cp.mp3"
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "quiet", "-i", path, "-af", f"aselect='not({expr})',asetpts=N/SR/TB", tmp], capture_output=True)
+    if not os.path.exists(tmp) or duration(tmp) < 0.3:
+        return starts
+    os.replace(tmp, path)
+    if not starts:
+        return starts
+    out = []
+    for t in starts:
+        shift = 0.0
+        for c0, c1 in cuts:
+            if t >= c1:
+                shift += c1 - c0
+            elif t > c0:
+                shift += t - c0
+        out.append(max(0.0, t - shift))
+    return out
+
+
 def trim_silence(path: str):
     """Sondaki fazla sessizliği kırpar (kelime zamanları değişmesin diye baş kısma dokunmaz)."""
     tmp = path + ".trim.mp3"

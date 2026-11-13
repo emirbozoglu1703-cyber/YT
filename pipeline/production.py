@@ -33,6 +33,7 @@ def synth_lines(script, voice_plan, work, engine, prev=None):
             results.append(prev[i])
             continue
         _, starts = tts.synth(vp.get("tts_text") or line["text"], vkey, path, engine, vp.get("settings"))
+        starts = tts.compress_pauses(path, starts)
         tts.trim_silence(path)
         dur = tts.duration(path)
         met = tts.measure(path)
@@ -52,7 +53,8 @@ def voice_issues(script, voice_res, voice_plan, engine):
     for i, r in enumerate(voice_res, 1):
         if engine == "silent":
             break
-        if not 1.6 <= r["words_per_sec"] <= 4.2:
+        nwords = len(script["lines"][i - 1]["text"].split())
+        if r["words_per_sec"] > 4.2 or (r["words_per_sec"] < 1.6 and nwords >= 4):  # 1-3 kelimelik kısa replikler doğal olarak yavaş
             hard.append(f"replik {i}: hız {r['words_per_sec']} kelime/sn (1.6-4.2 olmalı)")
         if r["metrics"]["max_db"] is not None and r["metrics"]["max_db"] > -0.3:
             hard.append(f"replik {i}: ses patlıyor (max {r['metrics']['max_db']} dB)")
