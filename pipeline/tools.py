@@ -145,6 +145,13 @@ def cmd_check_script(a):
             issues.append(f"{c.get('id')}: geçersiz tür {c.get('type')}")
         if c.get("voice") not in VOICE_KEYS:
             issues.append(f"{c.get('id')}: voice {sorted(VOICE_KEYS)} içinden olmalı")
+        g, v = c.get("gender"), c.get("voice")
+        if g == "female" and v in ("narrator", "man", "old", "young"):
+            issues.append(f"{c.get('id')}: kadın karaktere erkek sesi ({v}); woman/oldwoman/child kullan")
+        if g == "male" and c.get("age") != "child" and v in ("woman", "oldwoman"):
+            issues.append(f"{c.get('id')}: erkek karaktere kadın sesi ({v})")
+        if c.get("age") == "old" and g == "female" and v == "woman":
+            issues.append(f"{c.get('id')}: yaşlı kadına genç kadın sesi; oldwoman kullan")
         if not c.get("name"):
             issues.append(f"{c.get('id')}: name (ekranda görünen ad) boş")
     lines = s.get("lines", [])
