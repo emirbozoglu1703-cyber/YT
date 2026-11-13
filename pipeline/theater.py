@@ -1010,8 +1010,8 @@ class Theater:
             front = 92 + 3 * math.sin(ph)
         elif act == "think":
             front, tilt = 128, tilt + 4
-        elif act == "cheer":
-            front, back = 160 + 15 * math.sin(ph * 3), -160 - 15 * math.sin(ph * 3)
+        elif act == "cheer":  # kollar yukarı-dışarı: yüzün önünden geçmez
+            front, back = 118 + 14 * math.sin(ph * 3), -150 - 14 * math.sin(ph * 3)
             dy -= abs(math.sin(ph * 1.6)) * 26
         elif act == "sad":
             front, back, tilt, dy = 4, -2, tilt + 7, dy + 16
@@ -1131,7 +1131,13 @@ class Theater:
         z, fx, fy = 1.0, W / 2, H / 2
         sx = self.speaker_x(si)
         if sc.camera == "medium":
-            z, fx, fy = 1.16, (sx if sx is not None else 0.5) * W, 860
+            # konuşana ağırlık ver ama dinleyenleri de kadrajda tut
+            xs = [p["x"] for p in sc.on_stage]
+            if xs:
+                c = (2 * (sx if sx is not None else 0.5) + sum(xs)) / (2 + len(xs))
+            else:
+                c = 0.5
+            z, fx, fy = 1.16, c * W, 860
         elif sc.camera == "close":
             z, fx, fy = 1.42, (sx if sx is not None else 0.5) * W, 800
         if sc.curtain_out and t > sc.duration - 0.45 or sc.is_outro:
