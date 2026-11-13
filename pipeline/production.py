@@ -53,9 +53,13 @@ def voice_issues(script, voice_res, voice_plan, engine):
     for i, r in enumerate(voice_res, 1):
         if engine == "silent":
             break
-        nwords = len(script["lines"][i - 1]["text"].split())
-        if r["words_per_sec"] > 4.2 or (r["words_per_sec"] < 1.6 and nwords >= 4):  # 1-3 kelimelik kısa replikler doğal olarak yavaş
-            hard.append(f"replik {i}: hız {r['words_per_sec']} kelime/sn (1.6-4.2 olmalı)")
+        # hız, OKUNAN metne göre ("58.800" = "elli sekiz bin sekiz yüz" = 5 kelime) ve tempo sonrası
+        spoken = tts.strip_tags(voice_plan[i - 1].get("tts_text") or script["lines"][i - 1]["text"])
+        nwords = len(spoken.split())
+        wps = round(nwords / max(0.1, r["duration"] / tempo()), 2)
+        r["words_per_sec"] = wps
+        if wps > 4.6 or (wps < 1.5 and nwords >= 4):  # 1-3 kelimelik kısa replikler doğal olarak yavaş
+            hard.append(f"replik {i}: hız {wps} kelime/sn (1.5-4.6 olmalı)")
         if r["metrics"]["max_db"] is not None and r["metrics"]["max_db"] > -0.3:
             hard.append(f"replik {i}: ses patlıyor (max {r['metrics']['max_db']} dB)")
         if any(p > 0.8 for p in r["metrics"]["long_pauses"]):
