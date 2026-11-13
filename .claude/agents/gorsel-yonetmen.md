@@ -28,6 +28,9 @@ KURALLAR:
 - Tabela yazıları kusursuz Türkçe ve BÜYÜK HARF.
 - KADRAJ: "close" konuşana ~1.4x yaklaşır; yanındaki kukla yarım görünür ya da kadraj dışında kalır. İki kuklalı karşılıklı konuşmada "medium" ya da "wide" kullan;
   "close"u tek kuklalı ya da seyirciye dönük anlarda kullan. Kenarda yarım kalan kukla istemiyorsan onu o sahneden çıkar.
+- Üç kuklalı sahnede ortadaki kukla "point"/"give" yapmasın (eli ve tuttuğu eşya yandakinin yüzüne uzanır); iki kukla arasında en az 0.3 mesafe bırak.
+- Yakın planda (close) tabela koyacaksan konuşanın baktığı tarafa koy; motor tabelayı kadraja ve kuklalara göre otomatik kaydırır/küçültür, sığmazsa kaldırır (preview UYARI'larında görürsün).
+- Kuklalar 0.27-0.73 arasında olmalı (daha kenarı perdeye girer).
 - Hareket repliği birebir göstermeli (mesaj yazıyorsa "give" ile telefonu öne uzat, kulağına götürme).
 - Art arda sahneler birbirinin kopyası olmasın: kukla yerlerini, dekoru, planı değiştir. Aynı dizilimi 2 sahneden fazla kullanma.
 Sonra `python pipeline/tools.py preview <KLASÖR>` çalıştır. HATALAR'ı düzelt, UYARI'lara bak (otomatik düzeltildi ama sen kaynağında düzelt), tekrar çalıştır.

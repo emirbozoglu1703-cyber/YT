@@ -713,11 +713,11 @@ def stage_frame() -> Image.Image:
     d.rectangle([0, 0, OPEN_L, LIP_TOP], fill=(44, 22, 26))
     d.rectangle([OPEN_R, 0, W, LIP_TOP], fill=(44, 22, 26))
     # toplanmış yan perdeler
-    left = curtain_panel(170, LIP_TOP - 120)
+    left = curtain_panel(125, LIP_TOP - 120)
     im.alpha_composite(left, (-20, 120))
-    im.alpha_composite(curtain_panel(170, LIP_TOP - 120, flip=True), (W - 150, 120))
-    d.ellipse([-30, 760, 160, 820], fill=(214, 170, 70))
-    d.ellipse([W - 160, 760, W + 30, 820], fill=(214, 170, 70))
+    im.alpha_composite(curtain_panel(125, LIP_TOP - 120, flip=True), (W - 105, 120))
+    d.ellipse([-30, 760, 115, 820], fill=(214, 170, 70))
+    d.ellipse([W - 115, 760, W + 30, 820], fill=(214, 170, 70))
     # saçak (valans)
     val = curtain_panel(W, 230)
     im.alpha_composite(val, (0, 60))
@@ -911,19 +911,19 @@ def lint_scene(sd: dict, cast_ids: set) -> tuple[dict, list[str]]:
             warn.append(f"geçersiz hareket '{p.get('action')}' -> idle")
             p["action"] = "idle"
         x = float(p.get("x", 0.5))
-        if not 0.2 <= x <= 0.8:
-            warn.append(f"'{p['id']}' x={x} sahne dışına taşıyor; 0.2-0.8'e çekildi")
-            p["x"] = min(0.8, max(0.2, x))
+        if not 0.27 <= x <= 0.73:
+            warn.append(f"'{p['id']}' x={x} perdeye çok yakın; 0.27-0.73'e çekildi")
+            p["x"] = min(0.73, max(0.27, x))
         keep.append(p)
     if len(keep) > 3:
         warn.append("sahnede 3'ten fazla kukla; fazlası atıldı")
         keep = keep[:3]
     keep.sort(key=lambda p: p["x"])
     for a, b in zip(keep, keep[1:]):
-        if b["x"] - a["x"] < 0.24:
+        if b["x"] - a["x"] < 0.23:
             warn.append(f"'{a['id']}' ve '{b['id']}' üst üste; aralandı")
             mid = (a["x"] + b["x"]) / 2
-            a["x"], b["x"] = max(0.2, mid - 0.13), min(0.8, mid + 0.13)
+            a["x"], b["x"] = max(0.27, mid - 0.12), min(0.73, mid + 0.12)
     sd["on_stage"] = keep
     if sd.get("speaker", "narrator") not in ("narrator",) and sd.get("speaker") not in {p["id"] for p in keep}:
         warn.append(f"konuşan '{sd.get('speaker')}' sahnede değil")
@@ -940,8 +940,29 @@ def lint_scene(sd: dict, cast_ids: set) -> tuple[dict, list[str]]:
                     warn.append(f"'{p['kind']}' kuklanın önünü kapatıyor; kaydırıldı")
                     x = nx
         p["x"] = x
-        if p["kind"] == "sign" and len(str(p.get("text", ""))) > 16:
-            warn.append(f"tabela yazısı çok uzun: '{p.get('text')}'")
+        if p["kind"] == "sign":
+            if len(str(p.get("text", ""))) > 16:
+                warn.append(f"tabela yazısı çok uzun: '{p.get('text')}'")
+            placed = False
+            # kadraj: yakın/orta planda kamera konuşana yaklaşır, tabela görünür pencerenin içinde kalmalı
+            spx = next((q["x"] for q in keep if q["id"] == sd.get("speaker")), 0.5)
+            win = {"close": 0.33, "medium": 0.42}.get(sd.get("camera"), 0.5)
+            wl, wr = max(0.12, spx - win + 0.02), min(0.88, spx + win - 0.02)
+            for sc_ in (float(p.get("scale", 1.0)), 0.6, 0.45):
+                half = max(160, 30 * len(str(p.get("text", ""))) + 60) * sc_ / 2 / W
+                lo, hi = wl + half, wr - half
+                cands = sorted([lo + k * 0.01 for k in range(int((hi - lo) / 0.01) + 1)], key=lambda c: abs(c - x)) if hi >= lo else []
+                for c in cands:
+                    if all(abs(q["x"] - c) >= half + 0.12 for q in keep):
+                        if abs(c - x) > 0.005 or sc_ != float(p.get("scale", 1.0)):
+                            warn.append(f"tabela '{p.get('text')}' kuklaların arkasında kalıyordu; x={c:.2f}, ölçek {sc_}")
+                        x, p["scale"], placed = c, sc_, True
+                        break
+                if placed:
+                    break
+            if not placed:
+                warn.append(f"tabela '{p.get('text')}' kuklalarla çakışmadan sığmıyor; kaldırıldı")
+                continue
         props.append(p)
     sd["props"] = props[:3]
     return sd, warn
@@ -1006,12 +1027,12 @@ class Theater:
             k = ease(t / 1.4)
             x = x0 + (x - x0) * k
             dy -= abs(math.sin(t * 8)) * 18 * (k < 1)
-        if act == "point":
-            front = 92 + 3 * math.sin(ph)
+        if act == "point":  # hafif aşağı: komşu kuklanın yüzüne uzanmaz
+            front = 80 + 3 * math.sin(ph)
         elif act == "think":
             front, tilt = 128, tilt + 4
-        elif act == "cheer":  # kollar yukarı-dışarı: yüzün önünden geçmez
-            front, back = 118 + 14 * math.sin(ph * 3), -150 - 14 * math.sin(ph * 3)
+        elif act == "cheer":  # ön el göğüs hizasında sallanır, arka kol yukarı: yüz ve elde tutulan eşya çakışmaz
+            front, back = 76 + 14 * math.sin(ph * 3), -155 - 12 * math.sin(ph * 3)
             dy -= abs(math.sin(ph * 1.6)) * 26
         elif act == "sad":
             front, back, tilt, dy = 4, -2, tilt + 7, dy + 16
