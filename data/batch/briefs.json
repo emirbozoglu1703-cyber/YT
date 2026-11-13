@@ -5,17 +5,17 @@
         "theme": "Kasiyer para üstünü fazla verir: 200 yerine 2.000 TL",
         "emotion": "gerilim, iç çatışma",
         "backdrop_idea": "market",
-        "hook_idea": "Kasiyer kukla seyirciye: 'Bugün 10 kişiye bilerek 1.800 TL fazla para üstü vereceğim. Bakalım kaç kişi geri döner.'",
-        "cast_idea": "genç kasiyer, aceleci takım elbiseli patron, yorgun anne, çocuk",
-        "twist_idea": "Parayı hemen cebe atan takım elbiseli adam aslında marketin sahibi; kendi kasiyerinin dürüstlüğünü değil müşterilerini sınıyormuş ve geri getiren tek kişi en fakir görünen anne çıkar."
+        "hook_idea": "Market sahibi kukla seyirciye fısıldar: 'Bugün kasiyerim fark etmeden, kasaya gizlice fazladan 1.800 lira koydum. Bakalım akşam sayımda ne diyecek.'",
+        "cast_idea": "genç kasiyer, market sahibi, takım elbiseli müşteri, yorgun anne",
+        "twist_idea": "Gün boyu takım elbiseli bir müşteri kasiyere 'kasa fazla verirse kimse bilmez' diye akıl verir. Akşam kasiyer fazlayı sahibine teslim eder. Twist: takım elbiseli adam aslında sahibin müfettişidir ve kasiyerin bu baskıya rağmen dürüst kalıp kalmayacağını ölçmektedir."
       },
       {
         "theme": "Yerde içinde 4.000 TL ve bir çocuk fotoğrafı olan cüzdan",
         "emotion": "merak, şefkat",
         "backdrop_idea": "street",
         "hook_idea": "Kukla cüzdanı açar: 'İçinde 4.000 lira, bir kimlik ve bir çocuk resmi var. Kimse görmedi. Sen olsan?'",
-        "cast_idea": "simitçi dede, telefonuna gömülmüş genç, köpek (dog), cüzdanın sahibi kadın",
-        "twist_idea": "Cüzdanı sahibine götüren, herkesin 'alır kaçar' dediği sokak köpeğinin peşindeki genç olur; fotoğraftaki çocuk ise genç ile aynı yurtta büyümüştür."
+        "cast_idea": "simitçi dede, kapüşonlu ve dövmeli genç, cüzdanın sahibi kadın",
+        "twist_idea": "Simitçi dede dahil herkes kapüşonlu gence şüpheyle bakar. Cüzdanı sahibine götüren o genç olur. Twist: cüzdanın sahibi, gencin o sabah iş başvurusu yaptığı ve 'görünüşünden' reddedildiği dükkânın sahibidir."
       },
       {
         "theme": "Sınavdan bir gün önce cevap anahtarı tuvalette bulunur",
@@ -47,15 +47,15 @@
         "backdrop_idea": "market",
         "hook_idea": "Anons kuklası: 'Saat 10.00'da 1 kilo kahve 99 lira, sadece ilk 20 kişiye!' Ve tam o anda ağlayan bir çocuk koluna yapışır.",
         "cast_idea": "kalabalık müşteriler, ağlayan çocuk, indirim avcısı teyze, market güvenliği",
-        "twist_idea": "Herkes sıraya koşarken çocuğa yardım eden indirim avcısı teyze olur; çocuk aslında marketin indirim sırasında kaybolan sahibinin torunudur, ama teyze bunu öğrenince bile kahveyi almayı reddeder."
+        "twist_idea": "Herkes sıraya koşarken çocuğa yardım eden kişi indirim avcısı teyze olur ve kendi sırasını kaybeder. Twist: çocuk market sahibinin torunudur. Sahip teşekkür olarak teyzeye indirimli kahveyi ayırır; teyze 'ben sırayı çocuk için bıraktım, ödül için değil' diyerek geri çevirir."
       },
       {
-        "theme": "Yaşlı müşteri telefon tamircisine 500 yerine 5.000 TL uzatır",
-        "emotion": "hüzün, dürüstlük",
-        "backdrop_idea": "shop",
-        "hook_idea": "Nine kukla tezgâha bir deste para koyar: 'Kızım, ekranı yaptın, al şu 500 lirayı.' Destede 5.000 lira var.",
-        "cast_idea": "telefon tamircisi genç kadın, nine, dükkân komşusu kurnaz esnaf",
-        "twist_idea": "Kurnaz komşu 'gözü görmüyor, al' der; tamirci fazlayı iade eder. Nine aslında gözlüğünü bilerek takmamıştır: yeni torununa güvenilir bir usta arıyordur ve dükkânın tüm cihazlarını oraya getirir."
+        "theme": "Park halindeki arabayı çizdin, kimse görmedi: not bırakır mısın?",
+        "emotion": "gerilim, utanç, dürüstlük",
+        "backdrop_idea": "office",
+        "hook_idea": "Kukla ofis otoparkında bisikletiyle bir arabaya sürtünür: 'Kapıda 20 santimlik bir çizik. Kamera yok, kimse görmedi. Not bıraksam boya parası en az 8 bin lira.'",
+        "cast_idea": "bisikletli stajyer, kapıdaki güvenlik görevlisi, ofisteki sert müdür",
+        "twist_idea": "Stajyer önce gitmeye kalkar, güvenlik görevlisi 'ben bir şey görmedim' diye göz kırpar. Stajyer yine de telefon numarasıyla not bırakır. Twist: arabanın sahibi sandığı sert müdür değil, güvenlik görevlisinin kendisidir; görevli çizik notunu cebinden çıkarır ve 'yirmi yıldır bu otoparkta not bırakan ilk kişi sensin' der."
       },
       {
         "theme": "Ekran kilidi açık bulunmuş telefon: mesajlar okunsun mu?",
@@ -71,15 +71,15 @@
         "backdrop_idea": "shop",
         "hook_idea": "Fırıncı kukla: 'Karşıdaki fırına 300 ekmeklik düğün siparişi gelecekti. Adam yanlışlıkla bana geldi. Söyleyeyim mi?'",
         "cast_idea": "iki rakip fırıncı, aceleci damat babası, fırının kedisi",
-        "twist_idea": "Fırıncı müşteriyi rakibe yönlendirir; ertesi gün rakip fırıncının fırını bozulur ve siparişi tamamlamak için birlikte çalışırlar. Damat babası iki fırına da düğün davetiyesi bırakır."
+        "twist_idea": "Fırıncı müşteriyi rakibe yönlendirir. Twist: damat babası aslında iki fırıncının da çıraklık yaptığı eski ustalarıdır; siparişi bilerek yanlış kapıya götürmüştür ve dürüst davranana düğünün tüm siparişini, ötekine bir ders verir."
       },
       {
         "theme": "Öğretmen notu yanlışlıkla 45 yerine 85 girer",
         "emotion": "sevinç, suçluluk",
         "backdrop_idea": "school",
         "hook_idea": "Çocuk kukla karnesini gösterir: 'Fizikten 45 almıştım, sistemde 85 yazıyor. Babam bana bisiklet sözü vermişti.'",
-        "cast_idea": "çocuk, baba, fizik öğretmeni, en yakın arkadaş",
-        "twist_idea": "Çocuk hatayı söylemeye gider; öğretmen 'not değişmeyecek ama sen kazandın' der: aynı hata arkadaşında da olmuş ve arkadaş susmuştur. Baba bisikleti nota değil dürüstlüğe alır."
+        "cast_idea": "çocuk, baba, fizik öğretmeni, sessiz en yakın arkadaş",
+        "twist_idea": "Çocuk hatayı öğretmene söylemeye gider; öğretmen bunu zaten biliyordur. Twist: herkesin 'susar' sandığı en yakın arkadaş hatayı ilk fark eden kişidir ve çocuğu öğretmene gitmeye o yönlendirmiştir. Baba bisikleti nota değil dürüstlüğe alır."
       }
     ],
     "mahalle-kuklalari": [
@@ -100,12 +100,12 @@
         "twist_idea": "Kurye üç kez gelip gider, teyze balkondan rapor verir. Sonunda paket teyzenin evinden çıkar: kurye üç gündür bütün paketleri 'emanet' diye teyzeye bırakıyormuş, teyze de içindekileri yorumluyor."
       },
       {
-        "theme": "Aile WhatsApp grubunda günaydın mesajları savaşı",
+        "theme": "Aile mesaj grubunda günaydın mesajları savaşı",
         "emotion": "sıcak tebessüm",
         "backdrop_idea": "home",
         "hook_idea": "Anne kukla: 'Sabah 06.12'de gönderdiğim çiçekli günaydın mesajını 14 kişi gördü, 1 kişi cevap verdi. O da yanlışlıkla.'",
-        "cast_idea": "anne, ergen oğul, teyze, telefonu ters tutan dede",
-        "twist_idea": "Rekabet tırmanır: daha çok gül, daha büyük yazı, sesli mesaj. Punchline: dedeye cevap veren tek kişi kendi kendisidir; iki telefonu var, birinden yazıp öbüründen cevaplıyor."
+        "cast_idea": "anne, ergen oğul, teyze, dede",
+        "twist_idea": "Rekabet tırmanır: daha çok gül, daha büyük yazı, sesli mesaj. Punchline: annenin mesajına gelen tek cevap da annenin kendisindendir; iki telefonu var, birinden yazıp öbüründen 'çok güzel anneciğim' diye cevaplıyor."
       },
       {
         "theme": "Misafir gelecek panik temizliği",
@@ -137,7 +137,7 @@
         "backdrop_idea": "school",
         "hook_idea": "Baba kukla öğretmene: 'Benim oğlum çok akıllıdır, 7. sınıf.' Öğretmen: 'Oğlunuz 5. sınıfta, ve bu benim sınıfım değil.'",
         "cast_idea": "telaşlı baba, sabırlı öğretmen, çocuk, veli teyzeler",
-        "twist_idea": "Baba üç kez yanlış sınıfa girer, her sınıfta çocuğunu övmeye başlar. Punchline: oğlu kapıda belirir: 'Baba, ben bugün okulda değildim, ateşim vardı, beni sen evde bıraktın.'"
+        "twist_idea": "Baba üç kez yanlış sınıfa girer, her sınıfta çocuğunu övmeye başlar. Punchline: oğlu görüntülü arar: 'Baba, ben bu okulda değilim ki, beni geçen yıl sen nakletmiştin.'"
       },
       {
         "theme": "Köydeki babaanne ile görüntülü arama",
@@ -170,33 +170,33 @@
         "emotion": "hayret",
         "backdrop_idea": "sea",
         "hook_idea": "Çocuk kukla: 'Her canlının bir kalbi vardır!' Ahtapot kukla dokunaçlarını sallar: 'Benim üç tane var, kanım da mavi.'",
-        "cast_idea": "meraklı çocuk, deniz kıyısında balıkçı dede, ahtapot kuklası",
-        "twist_idea": "Dede açıklar: iki kalp kanı solungaçlara, biri vücuda pompalar; kandaki bakır içeren hemosiyanin kanı mavi yapar. Sonda ahtapot: 'Yüzünce vücut kalbim duruyor, o yüzden yürümeyi seviyorum.'",
+        "cast_idea": "meraklı çocuk, deniz biyoloğu teyze, ahtapot kuklası",
+        "twist_idea": "Deniz biyoloğu teyze açıklar: iki kalp kanı solungaçlara, biri vücuda pompalar; kandaki bakır içeren hemosiyanin kanı mavi yapar. Sonda ahtapot: 'Yüzünce vücut kalbim duruyor, o yüzden emeklemeyi seviyorum.'",
         "fact": "Ahtapotların üç kalbi vardır (ikisi solungaçlara, biri vücuda kan pompalar); kanları bakır içeren hemosiyanin nedeniyle mavidir."
       },
       {
         "theme": "Bal bozulmaz",
         "emotion": "şaşkınlık, sıcaklık",
         "backdrop_idea": "village",
-        "hook_idea": "Arıcı dede kavanozu kaldırır: 'Bu bal benden yaşlı olabilir ve hâlâ yenir.' Torun kukla kaşığı bırakır.",
+        "hook_idea": "Arıcı dede kavanozu kaldırır: 'Bu kavanozun yaşı senin yaşından büyük ve bal hâlâ bozulmadı.' Torun kukla kaşığı bırakır.",
         "cast_idea": "arıcı dede, şüpheci torun, arı kuklası",
-        "twist_idea": "Dede açıklar: balın suyu çok azdır ve asidiktir, mikroplar yaşayamaz; arkeologlar Mısır mezarlarında binlerce yıllık bal bulmuştur. Twist: torunun 'son kullanma tarihi' diye gösterdiği etiket kavanozun kapağıyla ilgilidir, balla değil.",
-        "fact": "Kapağı kapalı, uygun saklanan bal pratikte bozulmaz; düşük nem ve asidik yapısı mikropların üremesini engeller. Eski Mısır mezarlarında binlerce yıllık bal bulunmuştur."
+        "twist_idea": "Torun kristalleşmiş, şekerlenmiş bir kavanoz bulur ve 'bu bozulmuş' der. Dede açıklar: kristalleşme bozulma değildir, kavanoz ılık suya konunca bal yeniden akışkanlaşır. Balın suyu çok azdır ve asidiktir, mikroplar üreyemez; arkeologlar Mısır mezarlarında binlerce yıllık, bozulmamış bal bulmuştur.",
+        "fact": "Kapağı kapalı ve uygun koşullarda saklanan bal pratikte bozulmaz; düşük nem ve asidik yapısı mikropların üremesini engeller. Eski Mısır mezarlarında binlerce yıllık ve bozulmamış bal bulunmuştur. Balın kristalleşmesi (şekerlenmesi) bozulma değildir."
       },
       {
         "theme": "Venüs'te bir gün bir yıldan uzun",
         "emotion": "akıl karışıklığı, eğlence",
         "backdrop_idea": "school",
-        "hook_idea": "Öğrenci kukla: 'Venüs'te doğum günü kutlarsan, aynı gün içinde bir doğum günü daha gelir.'",
+        "hook_idea": "Öğrenci kukla tahtaya yazar: 'Venüs kendi etrafında bir turu, Güneş'in etrafındaki turundan daha uzun sürede atar.'",
         "cast_idea": "astronomi öğretmeni, iki öğrenci, sınıf baykuşu (owl)",
-        "twist_idea": "Öğretmen açıklar: Venüs kendi etrafında 243 Dünya gününde döner, Güneş etrafında ise yaklaşık 225 günde döner. Twist: baykuş 'o zaman Venüs'te herkes bir günde yaşlanır' der ve sınıf hesap yapmaya başlar.",
-        "fact": "Venüs kendi ekseni etrafında bir turu yaklaşık 243 Dünya gününde tamamlar; Güneş etrafındaki turu ise yaklaşık 225 Dünya günüdür. Yani Venüs'te bir gün (dönüş süresi) bir yıldan uzundur."
+        "twist_idea": "Öğretmen açıklar: Venüs kendi ekseni etrafında yaklaşık 243 Dünya gününde döner, Güneş etrafında ise yaklaşık 225 günde. Bir gün doğumundan ötekine geçen süre ise yaklaşık 117 Dünya günüdür. Twist: Venüs çoğu gezegenin tersi yönde döndüğü için orada Güneş batıdan doğar; baykuş 'o zaman ben orada sabahları ters otururum' der.",
+        "fact": "Venüs kendi ekseni etrafında bir turu yaklaşık 243 Dünya gününde tamamlar; Güneş etrafındaki turu ise yaklaşık 225 Dünya günüdür. Güneş'in bir doğuşundan ötekine geçen süre (güneş günü) yaklaşık 117 Dünya günüdür. Venüs ters yönde döndüğü için yüzeyinden bakıldığında Güneş batıdan doğar."
       },
       {
         "theme": "Baykuşlar gözlerini oynatamaz, başlarını çevirir",
         "emotion": "merak, mizah",
         "backdrop_idea": "forest",
-        "hook_idea": "Tavşan kukla: 'Baykuş beni sürekli izliyor ama gözleri hiç kıpırdamıyor!' Baykuş başını neredeyse tam arkaya çevirir.",
+        "hook_idea": "Tavşan kukla: 'Baykuş beni sürekli izliyor ama gözleri hiç kıpırdamıyor!' Baykuş başını omzunun üstünden arkaya doğru çevirir.",
         "cast_idea": "baykuş (owl), tavşan (rabbit), tilki (fox)",
         "twist_idea": "Baykuş açıklar: gözleri tüp şeklindedir, yuvalarında dönemez; bunun yerine boynunu yaklaşık 270 dereceye kadar çevirir. Twist: tilki aynısını denemeye çalışır, yarım dönüşte vazgeçer.",
         "fact": "Baykuşların gözleri tüp biçimindedir ve göz yuvalarında hareket ettirilemez; bunun yerine başlarını yaklaşık 270 dereceye kadar çevirebilirler."
@@ -205,16 +205,16 @@
         "theme": "Muz botanikte bir 'üzümsü meyve', çilek değil",
         "emotion": "şaşırtıcı neşe",
         "backdrop_idea": "home",
-        "hook_idea": "Anne kukla: 'Çilek bir dut, muz bir meyve.' Dede kukla: 'Tam tersi kızım: muz botanikte üzümsü meyve, çilek değil.'",
+        "hook_idea": "Anne kukla çilek kasesini uzatır: 'Çilek bir üzümsü meyve!' Dede kukla: 'Botanikte değil kızım. Muz öyle, çilek değil.'",
         "cast_idea": "anne, dede (emekli biyoloji öğretmeni), torun, kedi",
-        "twist_idea": "Dede açıklar: botanikte 'berry' (üzümsü meyve) tek çiçeğin tek yumurtalığından gelişen ve tohumları etli kısmın içinde olan meyvedir; muz, domates, üzüm bu gruptadır. Çileğin tohumları dışındadır. Twist: torun 'o zaman domates de meyve mi?' diye sorar, dede 'evet, ama salataya meyve koyma' der.",
-        "fact": "Botanik tanıma göre muz, domates ve üzüm 'üzümsü meyve' (berry) sınıfındadır; çilek ise bu sınıfa girmez çünkü tohumları dış yüzeyindedir."
+        "twist_idea": "Dede açıklar: botanikte üzümsü meyve (berry) tek çiçeğin yumurtalığından gelişen, tohumları etli kısmın içinde olan meyvedir; muz, domates ve üzüm bu gruptadır. Çileğin etli kısmı ise yumurtalıktan değil çiçek tablasından gelişir; dışındaki 'tohum' sanılan noktacıkların her biri aslında küçük bir meyvedir. Torun 'yani bir çilekte yüzlerce meyve mi var?' diye sorar, dede 'aşağı yukarı öyle' der.",
+        "fact": "Botanik tanıma göre muz, domates ve üzüm 'üzümsü meyve' (berry) sınıfındadır. Çilek bu sınıfa girmez: etli kısmı çiçek tablasından gelişir ve dışındaki noktacıkların (aken) her biri aslında ayrı, küçük birer meyvedir."
       },
       {
         "theme": "Kleopatra Ay'a inişe Keops Piramidi'nden daha yakın",
         "emotion": "tarih hayreti",
         "backdrop_idea": "palace",
-        "hook_idea": "Kraliçe kukla tahtta: 'Ben Kleopatra'yım. Piramitler bana sizin için olduğu kadar eski geliyordu.'",
+        "hook_idea": "Kraliçe kukla tahtta: 'Ben doğduğumda piramitler zaten 2.500 yaşındaydı. Bana sizden bile eski geliyordu!'",
         "cast_idea": "Kleopatra kuklası, tarih öğretmeni, astronot kostümlü çocuk",
         "twist_idea": "Öğretmen tarihleri sayar: Büyük Piramit yaklaşık MÖ 2560'ta yapıldı, Kleopatra MÖ 69-30 arasında yaşadı, Ay'a iniş 1969. Twist: astronot çocuk 'yani ben ona piramitten daha yakınım' der, Kleopatra 'o zaman sana selam' diye el sallar.",
         "fact": "Giza'daki Büyük Piramit yaklaşık MÖ 2560'ta tamamlandı; Kleopatra MÖ 69-30 yılları arasında yaşadı; ilk Ay'a iniş 1969'da oldu. Kleopatra zaman olarak Ay'a inişe, piramidin yapımından daha yakındır."
@@ -238,21 +238,21 @@
         "fact": "Kuşlar, theropod adı verilen etçil dinozor grubundan evrilmiştir; bu yüzden bilim insanları kuşları (tavuk dahil) yaşayan dinozorlar olarak kabul eder."
       },
       {
-        "theme": "Güneş ışığı Dünya'ya yaklaşık 8 dakikada gelir",
-        "emotion": "hayret, düşünceli",
+        "theme": "İnsan vücudunun en küçük kemiği kulakta",
+        "emotion": "hayret, eğlence",
         "backdrop_idea": "school",
-        "hook_idea": "Öğrenci kukla pencereye bakar: 'Şu an gördüğün Güneş, 8 dakika önceki Güneş.'",
-        "cast_idea": "fizik öğretmeni, iki öğrenci, sınıf saati",
-        "twist_idea": "Öğretmen açıklar: Güneş Dünya'dan ortalama 150 milyon km uzaktadır ve ışık saniyede yaklaşık 300.000 km gider, bu yaklaşık 8 dakika 20 saniye eder. Twist: geç kalan öğrenci 'ben de 8 dakika geç geldim, ışık hızıyla geldim' der.",
-        "fact": "Güneş ile Dünya arasındaki ortalama uzaklık yaklaşık 150 milyon km'dir; ışık bu mesafeyi yaklaşık 8 dakika 20 saniyede kat eder."
+        "hook_idea": "Davulcu çocuk kukla: 'Vücudumuzdaki en küçük kemik serçe parmakta!' Müzik öğretmeni: 'Hayır, şu an davulunu duymanı sağlayan, pirinç tanesinden küçük bir kemik.'",
+        "cast_idea": "müzik öğretmeni, davulcu çocuk, keman çalan kız öğrenci",
+        "twist_idea": "Öğretmen açıklar: orta kulaktaki üç küçük kemik (çekiç, örs, üzengi) sesi kulak zarından iç kulağa iletir; üzengi kemiği yaklaşık 3 milimetredir ve vücudun en küçük kemiğidir. Twist: davulcu çocuk 'o zaman davul çalarken aslında üç minik kemiği çalıyorum' der.",
+        "fact": "İnsan vücudunun en küçük kemiği orta kulaktaki üzengi kemiğidir (stapes), uzunluğu yaklaşık 3 mm'dir. Çekiç ve örs kemikleriyle birlikte ses titreşimlerini kulak zarından iç kulağa iletir."
       },
       {
         "theme": "Ay her yıl Dünya'dan yaklaşık 3,8 cm uzaklaşıyor",
         "emotion": "hüzünlü merak",
         "backdrop_idea": "sea",
-        "hook_idea": "Çocuk kukla geceleyin denize bakar: 'Dede, Ay bizden kaçıyor mu?' Dede: 'Her yıl tam 3,8 santim.'",
+        "hook_idea": "Çocuk kukla geceleyin denize bakar: 'Dede, Ay bizden kaçıyor mu?' Dede: 'Her yıl yaklaşık 3,8 santim.'",
         "cast_idea": "balıkçı dede, torun, karga (crow)",
-        "twist_idea": "Dede açıklar: Apollo astronotlarının Ay'a bıraktığı aynalara lazer gönderilerek ölçülür; gelgit etkileri yüzünden Ay yılda yaklaşık 3,8 cm uzaklaşır. Twist: torun 'o zaman acele edip ona gitmeliyim' der, dede 'merak etme, tırnakların daha hızlı uzar' der.",
+        "twist_idea": "Dede açıklar: Apollo astronotlarının Ay'a bıraktığı aynalara lazer gönderilerek ölçülür; gelgit etkileri yüzünden Ay yılda ortalama yaklaşık 3,8 cm uzaklaşır. Twist: torun 'o zaman acele edip ona gitmeliyim' der, dede 'merak etme, tırnağının uzadığı hızla neredeyse aynı' der.",
         "fact": "Ay, gelgit etkileşimleri nedeniyle Dünya'dan her yıl yaklaşık 3,8 cm uzaklaşır; bu, Apollo görevlerinin Ay yüzeyine bıraktığı reflektörlere lazer gönderilerek ölçülmüştür."
       }
     ],
@@ -270,8 +270,8 @@
         "emotion": "gizem, hüzün",
         "backdrop_idea": "palace",
         "hook_idea": "Bekçi kukla: 'Bu köşkte 40 yıldır kimse yaşamıyor. Ama her gece tam 22.00'de piyanoda aynı üç nota çalınıyor.'",
-        "cast_idea": "gece bekçisi, meraklı genç, baykuş (owl)",
-        "twist_idea": "İpucu: açılışta pencere kırık ve piyanonun üstünde fındık kabukları vardır. Çözüm: baykuş değil, sincap tuşların üstünden geçip fındık zulasına gidiyor; her gece aynı saatte, aynı rotadan."
+        "cast_idea": "gece bekçisi, meraklı genç, fındık faresi",
+        "twist_idea": "İpucu: açılışta pencere kırık ve piyanonun üstünde fındık kabukları vardır. Çözüm: gece yaşayan bir fındık faresi her gece aynı saatte tuşların üstünden geçip piyanonun içindeki fındık zulasına gidiyor; üç nota onun hep aynı rotasıdır."
       },
       {
         "theme": "Köyde her sabah kapının önünde bir yabancı ayakkabı",
@@ -279,15 +279,15 @@
         "backdrop_idea": "village",
         "hook_idea": "Nine kukla bir tek ayakkabı gösterir: 'Bu hafta kapımın önüne 6 tane tek ayakkabı bırakıldı. Hiçbiri birbirinin eşi değil.'",
         "cast_idea": "nine, muhtar, köpek (dog)",
-        "twist_idea": "İpucu: köpek ilk sahnede ağzında bir şeyle köşeden geçiyor ve ayakkabıların hepsi ıslak. Çözüm: köpek, cami önündeki ayakkabılıktan ayakkabı taşıyıp sahibesine 'hediye' getiriyor."
+        "twist_idea": "İpucu: köpek ilk sahnede ağzında bir şeyle köşeden geçiyor ve ayakkabıların hepsi ıslak. Çözüm: köpek, gece köy kahvesinin önünde unutulan ayakkabıları taşıyıp sahibesine 'hediye' getiriyor."
       },
       {
         "theme": "Gece sokak lambası sürekli yanıp sönüyor: biri mesaj mı gönderiyor?",
         "emotion": "merak, gerilim",
         "backdrop_idea": "street",
-        "hook_idea": "Kukla balkondan bakar: 'Sokak lambası 3 kısa, 3 uzun, 3 kısa yanıp sönüyor. Bu bir SOS işareti!'",
-        "cast_idea": "meraklı emekli telsizci dede, torun, elektrikçi",
-        "twist_idea": "İpucu: açılışta lambanın tepesinde bir karga yuvası görünür. Çözüm: karga yuvasından sarkan bir tel lambanın kontağını sallıyor; SOS rastlantı değil, dede ritmi kafasında tamamlıyor. Gerçek 'mesaj' ise karganın yuvayı yapmak için çaldığı dedenin anahtarlığı."
+        "hook_idea": "Kukla balkondan bakar: 'Karşı apartmanın penceresinden bir ışık 3 kısa, 3 uzun, 3 kısa yanıp sönüyor. Bu bir SOS işareti!'",
+        "cast_idea": "emekli telsizci dede, torun, karşı apartmandaki çocuk",
+        "twist_idea": "İpucu: açılışta torun 'dedem her sese Mors der' der ve karşı pencerenin kenarında 'Mors Alfabesi' yazan bir kitap görünür. Çözüm: karşı apartmandaki çocuk el feneriyle Mors öğreniyor ve ilk öğrendiği işaret SOS; dede kendi feneriyle 'MERHABA' diye cevap verir."
       },
       {
         "theme": "Ormanda kamp: sabah çadırın etrafında daire şeklinde iz",
@@ -295,7 +295,7 @@
         "backdrop_idea": "forest",
         "hook_idea": "Kampçı kukla: 'Uyandığımızda çadırın etrafında kusursuz bir daire çizilmişti. Ve hiçbirimiz dışarı çıkmamıştık.'",
         "cast_idea": "iki arkadaş kampçı, tilki (fox), tavşan (rabbit)",
-        "twist_idea": "İpucu: açılışta çadır ipine bağlı bir sosis torbası asılıdır. Çözüm: tilki gece boyunca torbaya ulaşmaya çalışarak çadırın etrafında dönmüş; ipin uzunluğu dairenin yarıçapına eşittir."
+        "twist_idea": "İpucu: açılışta sosis torbası bir iple çadır direğine bağlıdır. Çözüm: tilki gece torbayı ağzına alıp kaçmaya çalışmış; ip gergin kaldığı için torba yerde sürüklenerek direğin etrafında daire çizmiş. Dairenin yarıçapı ip uzunluğuna eşittir."
       },
       {
         "theme": "Eski evin duvarında her gün değişen tebeşir notu",
@@ -310,8 +310,8 @@
         "emotion": "entrika, zeka",
         "backdrop_idea": "palace",
         "hook_idea": "Kral kukla: 'Taç kilitli odadan kayboldu. Anahtar sadece bende. Ve ben bütün gece uyudum.'",
-        "cast_idea": "kral, vezir, saray aşçısı, karga (crow)",
-        "twist_idea": "İpucu: açılışta pencere aralık ve yerde bir siyah tüy vardır, ayrıca kral 'parlak şeyleri sever' diye kargasından bahseder. Çözüm: kralın evcil kargası pencereden girip tacı yuvasına götürmüş; şüphelenilen vezir aklanır."
+        "cast_idea": "kral, vezir, saray aşçısı",
+        "twist_idea": "İpucu: açılışta kralın yatağının yanında çamurlu terlikler ve vezirin 'efendim yine gece bahçede gezdiniz mi?' sorusu vardır. Çözüm: kral uyurgezerdir; gece tacı bahçedeki gül saksısının yanına kendisi koymuştur. Terlikteki çamur oraya götürür, şüphelenilen aşçı aklanır."
       },
       {
         "theme": "Gece yarısı kapı zili çalıyor ama kapıda kimse yok",
@@ -333,9 +333,9 @@
         "theme": "Kapalı dükkânda gece yanıp sönen ışık ve bir gölge",
         "emotion": "gerilim, sıcak final",
         "backdrop_idea": "street",
-        "hook_idea": "Gece bekçisi kukla: 'Kapalı kitapçının içinde her gece bir mum yanıyor. Sahibi 2 ay önce emekli oldu.'",
+        "hook_idea": "Gece bekçisi kukla: 'Kapalı kitapçının içinde her gece bir fener ışığı yanıyor. Sahibi 2 ay önce emekli oldu.'",
         "cast_idea": "gece bekçisi, emekli kitapçı dede, okul çocuğu",
-        "twist_idea": "İpucu: açılışta vitrinde 'kitap okuma yarışması - son gün yarın' afişi ve kapı altında ders defteri görünür. Çözüm: elektriği olmayan evden gelen çocuk, kitapçı dededen aldığı anahtarla geceleri dükkânda mumla ders çalışıyor; dede bunu biliyordur ve bekçiyi de sırra ortak eder."
+        "twist_idea": "İpucu: açılışta vitrinde 'kitap okuma yarışması - son gün yarın' afişi ve kapı altında bir ders defteri görünür. Çözüm: evinde elektrik kesik olan çocuk, kitapçı dededen aldığı anahtarla akşamları dükkânda pilli fenerle ders çalışıyor; dede bunu biliyordur ve bekçiyi de sırra ortak eder."
       }
     ],
     "para-kuklalari": [
@@ -401,7 +401,7 @@
         "backdrop_idea": "office",
         "hook_idea": "Kukla ekstreyi gösterir: '20.000 TL borcum var ama asgari ödeme sadece birkaç bin lira. Harika, değil mi?'",
         "cast_idea": "genç plaza çalışanı, muhasebeci iş arkadaşı, ofis kedisi",
-        "twist_idea": "Muhasebeci hesaplar: ödenmeyen kısma aylık yaklaşık %3,5 faiz ve üstüne vergiler eklenir; 20.000 TL borç için ayda 900 TL'ye yakın sadece faiz-vergi ödenir. Ders: kartın tamamını ödeyemiyorsan kartla harcamayı durdur."
+        "twist_idea": "Muhasebeci hesaplar: ödenmeyen kısma aylık yaklaşık %3-3,5 faiz ve üstüne vergiler eklenir; 20.000 TL borç için ayda yaklaşık 800-900 TL sadece faiz ve vergiye gider. Ders: kartın tamamını ödeyemiyorsan kartla harcamayı durdur."
       },
       {
         "theme": "'Savcıyım, hesabınız soruşturmada' diyen dolandırıcı",
@@ -416,8 +416,8 @@
         "emotion": "şaşkınlık, mizah",
         "backdrop_idea": "home",
         "hook_idea": "Kukla ekstreye bakar: 'Hiç kullanmadığım 5 abonelik için ayda 880 TL ödüyormuşum. Yılda 10.560 TL!'",
-        "cast_idea": "genç adam, annesi, kedi (cat) 'abonelik avcısı' rolünde",
-        "twist_idea": "Anne ile ekstreyi satır satır okurlar: deneme sürümünden kalma müzik, oyun, film, dil uygulaması, bulut. Kedi her abonelikte bir pati vurur. Ders: ayda bir ekstreyi tara, kullanmadığını hemen iptal et."
+        "cast_idea": "anne, genç oğul, kedi (cat)",
+        "twist_idea": "Anne her ayın 1'inde ekstresini tarar ve kullanmadığı aboneliği hemen iptal eder; oğul ise hiç bakmaz. Yıl sonunda oğul 5 unutulmuş abonelik için 10.560 TL ödemiştir, annenin ödediği ise sadece kullandığı tek abonelik için 1.800 TL'dir. Kedi her iptalde pati vurur. Ders: ayda bir ekstreyi tara."
       }
     ]
   }
