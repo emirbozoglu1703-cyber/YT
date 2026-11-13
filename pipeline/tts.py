@@ -20,11 +20,11 @@ import requests
 EDGE_VOICES = {  # Microsoft'ta 2 Türkçe ses var; karakterler perde (pitch) ve hızla ayrılır
     "narrator": {"voice": "tr-TR-AhmetNeural", "rate": "+4%", "pitch": "-4Hz"},
     "man": {"voice": "tr-TR-AhmetNeural", "rate": "+8%", "pitch": "+2Hz"},
-    "old": {"voice": "tr-TR-AhmetNeural", "rate": "-8%", "pitch": "-16Hz"},
+    "old": {"voice": "tr-TR-AhmetNeural", "rate": "-2%", "pitch": "-16Hz"},
     "young": {"voice": "tr-TR-AhmetNeural", "rate": "+14%", "pitch": "+12Hz"},
     "woman": {"voice": "tr-TR-EmelNeural", "rate": "+6%", "pitch": "+0Hz"},
     "child": {"voice": "tr-TR-EmelNeural", "rate": "+12%", "pitch": "+28Hz"},
-    "oldwoman": {"voice": "tr-TR-EmelNeural", "rate": "-8%", "pitch": "-10Hz"},
+    "oldwoman": {"voice": "tr-TR-EmelNeural", "rate": "-2%", "pitch": "-10Hz"},
 }
 DEFAULT_SETTINGS = {"stability": 0.45, "similarity_boost": 0.8, "style": 0.35, "use_speaker_boost": True}
 
