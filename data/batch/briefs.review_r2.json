@@ -1,0 +1,10 @@
+{
+  "approved": true,
+  "score": 8,
+  "issues": [
+    "vicdan-testi #0 (engellemeyen): Theme alanı eski senaryoyu anlatıyor ('Kasiyer para üstünü fazla verir: 200 yerine 2.000 TL'), oysa yeni hook ve twist'te market sahibi kasaya gizlice 1.800 TL koyuyor. Cast'teki 'yorgun anne'nin de bir rolü kalmadı -> Theme'i 'Market sahibi kasaya gizlice 1.800 TL fazla koyar: kasiyer söyleyecek mi?' yap. Anneyi ya çıkar ya da ikinci tepki olarak kullan.",
+    "gece-perdesi #3 (engellemeyen): Theme hâlâ 'sokak lambası yanıp sönüyor' diyor, oysa hook ve çözümde ışık karşı apartmanın penceresinden geliyor -> Theme'i 'Gece karşı pencereden yanıp sönen ışık: biri SOS mu gönderiyor?' yap.",
+    "vicdan-testi #8 (küçük): 'Ötekine bir ders verir' cümlesi havada kalıyor; rakip fırıncı yanlış bir şey yapmadı -> Bu ifadeyi çıkar ya da 'ikisini düğünde ortak çalıştırır' yap."
+  ],
+  "instructions": "r1'deki 22 maddenin hepsi düzeltilmiş. Kukla-bilgi bilgilerini tek tek yeniden doğruladım, hepsi doğru: Venüs güneş günü ~117 gün ve Güneş'in batıdan doğması; Kleopatra-piramit arası ~2.500 yıl; çileğin etli kısmının çiçek tablasından gelişmesi ve akenler; balın kristalleşmesinin bozulma olmaması; Ay'ın 'yaklaşık' 3,8 cm uzaklaşması ve tırnakla benzer hız; yeni #8'deki üzengi kemiğinin ~3 mm ve vücudun en küçük kemiği olması. Düzeltmeler yeni bir bilgi hatası, kopya ya da hassas konu getirmemiş. Gece-perdesi'nde hayvan fail sayısı 4/10'a inmiş. Para rakamları tutarlı, yatırım tavsiyesi yok. Onaylandı. Senaryoya geçmeden önce issues'daki iki theme satırını (vicdan-testi #0, gece-perdesi #3) hook ve twist'le aynı hale getir ki senarist yanlış öncülü izlemesin. Bunun için yeni tur gerekmez."
+}
