@@ -933,11 +933,13 @@ def lint_scene(sd: dict, cast_ids: set) -> tuple[dict, list[str]]:
             warn.append(f"geçersiz obje '{p.get('kind')}' atıldı")
             continue
         x = min(0.78, max(0.22, float(p.get("x", 0.5))))
+        small = p["kind"] in ("coins", "sack", "crate", "chest", "candle", "wallet")
+        margin = 0.10 if small else 0.12  # küçük objeler de kuklanın arkasında kaybolmasın
         for q in keep:
-            if abs(q["x"] - x) < 0.12 and p["kind"] not in ("coins", "sack", "crate", "chest", "candle", "wallet"):
-                nx = x + (0.2 if x >= q["x"] else -0.2)
-                if 0.12 <= nx <= 0.88:
-                    warn.append(f"'{p['kind']}' kuklanın önünü kapatıyor; kaydırıldı")
+            if abs(q["x"] - x) < margin:
+                nx = x + ((margin + 0.04) if x >= q["x"] else -(margin + 0.04))
+                if 0.15 <= nx <= 0.85:
+                    warn.append(f"'{p['kind']}' kuklanın {'arkasında kayboluyordu' if small else 'önünü kapatıyordu'}; kaydırıldı")
                     x = nx
         p["x"] = x
         if p["kind"] == "sign":
