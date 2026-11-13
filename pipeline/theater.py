@@ -1059,8 +1059,8 @@ class Theater:
                 a_, b_ = sc.word_starts[wi], sc.word_ends[wi]
                 prog = (t - a_) / max(0.05, b_ - a_)
                 dy -= math.sin(min(1, prog) * math.pi) * 10
-                if act in ("idle", "talk"):
-                    front = 40 + 34 * math.sin(wi * 1.7 + prog * 2)
+                if act in ("idle", "talk"):  # konuşma jesti: göğüs hizasında, komşunun yüzüne uzanmaz
+                    front = 32 + 24 * math.sin(wi * 1.7 + prog * 2)
         mouth = False
         if speaking:
             for a_, b_ in zip(sc.word_starts, sc.word_ends):
