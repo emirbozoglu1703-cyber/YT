@@ -922,7 +922,7 @@ def lint_scene(sd: dict, cast_ids: set) -> tuple[dict, list[str]]:
         keep = keep[:3]
     keep.sort(key=lambda p: p["x"])
     for a, b in zip(keep, keep[1:]):
-        if b["x"] - a["x"] < 0.23:
+        if b["x"] - a["x"] < 0.23 - 1e-6:  # kayan nokta payı
             warn.append(f"'{a['id']}' ve '{b['id']}' üst üste; aralandı")
             mid = (a["x"] + b["x"]) / 2
             a["x"], b["x"] = max(0.27, mid - 0.12), min(0.73, mid + 0.12)
