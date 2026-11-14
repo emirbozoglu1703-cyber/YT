@@ -969,6 +969,7 @@ def lint_scene(sd: dict, cast_ids: set) -> tuple[dict, list[str]]:
                 p["hang"], p["scale"] = True, 0.75
                 x = min(wr - 0.12, max(wl + 0.12, x))
                 warn.append(f"tabela '{p.get('text')}' yerde sığmadığı için kuklaların üstüne asıldı (x={x:.2f})")
+        p["x"] = x  # tabela için seçilen otomatik konum da kaydedilsin
         props.append(p)
     sd["props"] = props[:3]
     return sd, warn
