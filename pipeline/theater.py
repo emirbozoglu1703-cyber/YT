@@ -845,7 +845,9 @@ def draw_caption(img, scene, t, speaker_name, speaker_color):
     tf = font(FONT_BOLD, 38)
     tw = d.textlength(tag, font=tf)
     d.rounded_rectangle([W / 2 - tw / 2 - 26, CAP_Y - 34, W / 2 + tw / 2 + 26, CAP_Y + 30], radius=30, fill=speaker_color)
-    d.text((W / 2, CAP_Y - 2), tag, font=tf, fill=(255, 255, 255), anchor="mm", stroke_width=3, stroke_fill=shade(speaker_color, 0.5))
+    light = (0.299 * speaker_color[0] + 0.587 * speaker_color[1] + 0.114 * speaker_color[2]) > 170  # açık renkte koyu yazı
+    d.text((W / 2, CAP_Y - 2), tag, font=tf, fill=(30, 22, 20) if light else (255, 255, 255), anchor="mm",
+           stroke_width=0 if light else 3, stroke_fill=shade(speaker_color, 0.5))
     size = 78
     fnt = font(FONT_SERIF, size)
     full = " ".join(words[i] for i in chunk)
