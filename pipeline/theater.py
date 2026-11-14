@@ -826,7 +826,19 @@ def chunk_words(words, max_chars=20):
     if len(out) > 1 and len(out[0]) == 1 and len(words[out[0][0]]) < 8 and len(out[1]) < 4:
         out[1] = out[0] + out[1]
         out.pop(0)
-    return [c for c in out if c]
+    # en küçük yazı boyutunda bile ekrana sığmayan parçayı ikiye böl
+    meas = ImageDraw.Draw(Image.new("RGB", (8, 8)))
+    fnt = font(FONT_SERIF, 52)  # draw_caption'ın inebildiği en küçük boyut
+    fit = []
+    stack = [c for c in out if c]
+    while stack:
+        c = stack.pop(0)
+        if len(c) > 1 and meas.textlength(" ".join(words[j] for j in c), font=fnt) > W - 110:
+            h = len(c) // 2
+            stack[:0] = [c[:h], c[h:]]
+        else:
+            fit.append(c)
+    return fit
 
 
 def draw_caption(img, scene, t, speaker_name, speaker_color):
