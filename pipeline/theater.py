@@ -950,21 +950,23 @@ def lint_scene(sd: dict, cast_ids: set) -> tuple[dict, list[str]]:
             spx = next((q["x"] for q in keep if q["id"] == sd.get("speaker")), 0.5)
             win = {"close": 0.33, "medium": 0.42}.get(sd.get("camera"), 0.5)
             wl, wr = max(0.12, spx - win + 0.02), min(0.88, spx + win - 0.02)
-            for sc_ in (float(p.get("scale", 1.0)), 0.6, 0.45):
+            for sc_ in sorted({max(0.6, float(p.get("scale", 1.0))), 0.7, 0.6}, reverse=True):  # 0.6 altı telefonda okunmaz
                 half = max(160, 30 * len(str(p.get("text", ""))) + 60) * sc_ / 2 / W
                 lo, hi = wl + half, wr - half
                 cands = sorted([lo + k * 0.01 for k in range(int((hi - lo) / 0.01) + 1)], key=lambda c: abs(c - x)) if hi >= lo else []
                 for c in cands:
-                    if all(abs(q["x"] - c) >= half + 0.12 for q in keep):
+                    # kuklanın baktığı tarafta kolu uzanır: o tarafta daha geniş pay
+                    if all(abs(q["x"] - c) >= half + (0.18 if (c - q["x"]) * (1 if q.get("face", 1) >= 0 else -1) > 0 else 0.12) for q in keep):
                         if abs(c - x) > 0.005 or sc_ != float(p.get("scale", 1.0)):
                             warn.append(f"tabela '{p.get('text')}' kuklaların arkasında kalıyordu; x={c:.2f}, ölçek {sc_}")
                         x, p["scale"], placed = c, sc_, True
                         break
                 if placed:
                     break
-            if not placed:
-                warn.append(f"tabela '{p.get('text')}' kuklalarla çakışmadan sığmıyor; kaldırıldı")
-                continue
+            if not placed:  # yerde yer yok: kuklaların başının üstüne, iplerle asılı tabela
+                p["hang"], p["scale"] = True, 0.75
+                x = min(wr - 0.12, max(wl + 0.12, x))
+                warn.append(f"tabela '{p.get('text')}' yerde sığmadığı için kuklaların üstüne asıldı (x={x:.2f})")
         props.append(p)
     sd["props"] = props[:3]
     return sd, warn
@@ -1079,6 +1081,8 @@ class Theater:
         img.paste(self.backdrop(sc.backdrop, sc.light), (OPEN_L, BACK_TOP))
         img.paste(floor_layer(), (0, FLOOR_BACK), floor_layer())
         for p in sc.props:
+            if p.get("hang"):
+                continue
             pim, base = self.prop(p)
             x = int(p["x"] * W - pim.width / 2)
             y = int(FLOOR_BACK + 80 - base)
@@ -1086,6 +1090,18 @@ class Theater:
             sh.putalpha(pim.getchannel("A").point(lambda a: a * 0.35))
             img.paste(sh, (x + 14, y + 10), sh)
             img.paste(pim, (x, y), pim)
+        for p in sc.props:  # asılı tabelalar: kuklaların üstünde
+            if p.get("hang"):
+                pim, base = self.prop(p)
+                sc_ = float(p.get("scale", 0.75))
+                top, bot = int((560 - 410) * sc_), int((560 - 260) * sc_)
+                board = pim.crop((0, top, pim.width, bot))
+                bx, by = int(p["x"] * W - board.width / 2), 420
+                d0 = ImageDraw.Draw(img)
+                bb = board.getbbox() or (0, 0, board.width, board.height)
+                for rx in (bx + bb[0] + 20, bx + bb[2] - 20):
+                    d0.line([(rx, BACK_TOP), (rx, by + 10)], fill=(70, 50, 36), width=5)
+                img.paste(board, (bx, by), board)
         for idx, p in enumerate(sc.on_stage):
             pup = self.puppets[p["id"]]
             x, dy, tilt, front, back, mouth, blink, sad = self.pose(p, sc, t, idx)
