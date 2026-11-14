@@ -952,6 +952,12 @@ def lint_scene(sd: dict, cast_ids: set) -> tuple[dict, list[str]]:
             spx = next((q["x"] for q in keep if q["id"] == sd.get("speaker")), 0.5)
             win = {"close": 0.33, "medium": 0.42}.get(sd.get("camera"), 0.5)
             wl, wr = max(0.12, spx - win + 0.02), min(0.88, spx + win - 0.02)
+            if sd.get("camera") == "medium" and keep:  # orta plan kamerası kuklaların ortasına bakar (frame ile aynı hesap)
+                xs_ = [q["x"] for q in keep]
+                lo_, hi_ = min(xs_) * W - 190, max(xs_) * W + 190
+                z_ = max(1.0, min(1.16, W / max(1.0, hi_ - lo_)))
+                c_ = (lo_ + hi_) / 2 / W
+                wl, wr = max(0.12, max(wl, c_ - 0.5 / z_) + 0.02), min(0.88, min(wr, c_ + 0.5 / z_) - 0.02)
             for sc_ in sorted({max(0.6, float(p.get("scale", 1.0))), 0.7, 0.6}, reverse=True):  # 0.6 altı telefonda okunmaz
                 half = max(160, 30 * len(str(p.get("text", ""))) + 60) * sc_ / 2 / W
                 lo, hi = wl + half, wr - half
@@ -967,7 +973,8 @@ def lint_scene(sd: dict, cast_ids: set) -> tuple[dict, list[str]]:
                     break
             if not placed:  # yerde yer yok: kuklaların başının üstüne, iplerle asılı tabela
                 p["hang"], p["scale"] = True, 0.75
-                x = min(wr - 0.12, max(wl + 0.12, x))
+                hh = max(160, 30 * len(str(p.get("text", ""))) + 60) * 0.75 / 2 / W + 0.015
+                x = (wl + wr) / 2 if wr - wl < 2 * hh else min(wr - hh, max(wl + hh, x))
                 warn.append(f"tabela '{p.get('text')}' yerde sığmadığı için kuklaların üstüne asıldı (x={x:.2f})")
         p["x"] = x  # tabela için seçilen otomatik konum da kaydedilsin
         props.append(p)
